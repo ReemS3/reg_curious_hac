@@ -22,10 +22,7 @@ from baselines.common import set_global_seeds
 from baselines.common.mpi_moments import mpi_moments
 from baselines.util import mpi_fork, get_git_label
 import experiment.click_options as main_linker
-from subprocess import CalledProcessError
-import subprocess
 from baselines.util import physical_cpu_core_count, get_subdir_by_params
-import wtm_envs.register_envs
 from queue import deque
 
 
