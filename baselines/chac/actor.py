@@ -6,16 +6,16 @@ from baselines.chac.utils import Base, hidden_init
 
 
 class Actor(Base):
-    def __init__(self, env, level, n_levels, device, lr=0.001, hidden_size=64):
+    def __init__(self, env, level, n_levels, lr=0.001, hidden_size=64):
         super(Actor, self).__init__()
 
         self.actor_name = 'actor_' + str(level)
 
         # Determine range of actor network outputs.
         self.action_space_bounds = torch.FloatTensor(env.action_bounds
-                if level == 0 else env.subgoal_bounds_symmetric).to(device)
+                if level == 0 else env.subgoal_bounds_symmetric)
         self.action_offset = torch.FloatTensor(env.action_offset
-                if level == 0 else env.subgoal_bounds_offset).to(device)
+                if level == 0 else env.subgoal_bounds_offset)
 
         # Dimensions of action will depend on layer level
         action_space_size = env.action_dim if level == 0 else env.subgoal_dim
@@ -54,7 +54,7 @@ class Actor(Base):
     def update(self, mu_loss):
         self.actor_optimizer.zero_grad()
         mu_loss.backward()
-        flat_grads = torch.cat([param.flatten() for _, param in self.named_parameters()])
+        flat_grads = torch.cat([param.flatten() for __, param in self.named_parameters()])
         self.actor_optimizer.step()
         return {
             'mu_loss': mu_loss.item(),

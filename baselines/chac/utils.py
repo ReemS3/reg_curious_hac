@@ -1,5 +1,7 @@
 import numpy as np
 import torch.nn as nn
+import inspect
+import functools
 import gym
 from baselines import logger
 
@@ -58,25 +60,25 @@ class EnvWrapper(object):
         self.max_actions = np.prod(time_scales)
 
         if hasattr(env, 'subgoal_bounds'):
-            # some enviroments have a predefined subgoal space
+            # some enviroments have a predefined subgoal space)
             self.subgoal_dim = len(env.subgoal_bounds)
+            # Need these to properly configure subgoal actor networks
             self.subgoal_bounds_symmetric = np.zeros(self.subgoal_dim)
             self.subgoal_bounds_offset = np.zeros(self.subgoal_dim)
             for i in range(self.subgoal_dim):
                 self.subgoal_bounds_symmetric[i] = (self.subgoal_bounds[i][1] - self.subgoal_bounds[i][0]) / 2
                 self.subgoal_bounds_offset[i] = self.subgoal_bounds[i][1] - self.subgoal_bounds_symmetric[i]
-
         else:
             # otherwise we assume the end goal space to be equal to the sub goal space
             self.subgoal_dim = self.end_goal_dim
             scale, offset = self.get_scale_and_offset_for_normalized_subgoal()
             self.subgoal_bounds = np.stack((scale, scale), axis=1)
+            # TODO: check if self.subgoal_bounds[:, 0] *= -1.0 works too
             self.subgoal_bounds[:2, 0] *= -1.0
             self.subgoal_bounds_offset = offset
             self.subgoal_bounds_symmetric = np.zeros((len(self.subgoal_bounds)))
             for i in range(len(self.subgoal_bounds)):
                 self.subgoal_bounds_symmetric[i] = (self.subgoal_bounds[i][1] - self.subgoal_bounds[i][0]) / 2
-
             self.sub_goal_thresholds = np.array([self.distance_threshold] * self.end_goal_dim)
             self.end_goal_thresholds = np.array([self.distance_threshold] * self.end_goal_dim)
 
@@ -151,3 +153,30 @@ class EnvWrapper(object):
 
 def prepare_env(env_name, time_scale, input_dims):
     return EnvWrapper(env_name, gym.make(env_name).env, time_scale, input_dims)
+
+
+def store_args(method):
+    """Stores provided method args as instance attributes.
+    """
+    argspec = inspect.getfullargspec(method)
+    defaults = {}
+    if argspec.defaults is not None:
+        defaults = dict(
+            zip(argspec.args[-len(argspec.defaults):], argspec.defaults))
+    if argspec.kwonlydefaults is not None:
+        defaults.update(argspec.kwonlydefaults)
+    arg_names = argspec.args[1:]
+
+    @functools.wraps(method)
+    def wrapper(*positional_args, **keyword_args):
+        self = positional_args[0]
+        # Get default arg values
+        args = defaults.copy()
+        # Add provided arg values
+        for name, value in zip(arg_names, positional_args[1:]):
+            args[name] = value
+        args.update(keyword_args)
+        self.__dict__.update(args)
+        return method(*positional_args, **keyword_args)
+
+    return wrapper

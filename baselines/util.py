@@ -6,8 +6,24 @@ import inspect
 import functools
 import tensorflow as tf
 import numpy as np
-from baselines.common import tf_util as U
+# from baselines.common import tf_util as U
 import re
+
+# ================================================================
+# Flat vectors
+# ================================================================
+
+def var_shape(x):
+    out = x.get_shape().as_list()
+    assert all(isinstance(a, int) for a in out), \
+        "shape function assumes that shape is fully known"
+    return out
+
+def numel(x):
+    return intprod(var_shape(x))
+
+def intprod(x):
+    return int(np.prod(x))
 
 def store_args(method):
     """Stores provided method args as instance attributes.
@@ -91,10 +107,10 @@ def flatten_grads(var_list, grads):
     if len(var_list) == 0:
         return []
     try:
-        grad_list = [tf.reshape(grad, [U.numel(v)]) for (v, grad) in zip(var_list, grads)]
+        grad_list = [tf.reshape(grad, [numel(v)]) for (v, grad) in zip(var_list, grads)]
     except Exception as e:
         print(e)
-    grad_list = [tf.reshape(grad, [U.numel(v)]) for (v, grad) in zip(var_list, grads)]
+    grad_list = [tf.reshape(grad, [numel(v)]) for (v, grad) in zip(var_list, grads)]
     return tf.concat(grad_list, 0)
 
 def flatten_grads_compact(var_list, grads):
@@ -102,7 +118,7 @@ def flatten_grads_compact(var_list, grads):
     """
     if len(var_list) == 0:
         return []
-    return tf.concat([tf.reshape(grad, [U.numel(v)])
+    return tf.concat([tf.reshape(grad, [numel(v)])
                       for (v, grad) in zip(var_list, grads)], 0)
 
 

@@ -6,7 +6,7 @@ from baselines.chac.utils import Base, hidden_init
 
 
 class Critic(Base):
-    def __init__(self, env, level, n_levels, time_scale, device,
+    def __init__(self, env, level, n_levels, time_scale,
             lr=0.001, gamma=0.98, hidden_size=64):
 
         super(Critic, self).__init__()
@@ -21,8 +21,8 @@ class Critic(Base):
 
         # Set parameters to give critic optimistic initialization near q_init
         self.q_init = -0.067
-        self.q_offset = -torch.tensor([self.q_limit / self.q_init - 1]).log().to(device)
-
+        self.q_offset = -torch.tensor([self.q_limit / self.q_init - 1]).log()
+        
         # Network layers
         self.fc1 = nn.Linear(env.state_dim + action_dim + goal_dim, hidden_size)
         self.fc2 = nn.Linear(hidden_size, hidden_size)

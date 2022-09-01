@@ -8,13 +8,12 @@ from baselines.chac.forward_model import ForwardModel
 
 
 class Layer():
-    def __init__(self, level, env, agent_params, device):
+    def __init__(self, level, env, agent_params):
         self.level = level
         self.n_levels = agent_params['n_levels']
         self.time_scale = agent_params['time_scales'][level]
         self.subgoal_test_perc = agent_params['subgoal_test_perc']
         self.fw = agent_params['fw']
-        self.device = device
 
         # Set time limit for each layer. If agent uses only 1 layer, time limit
         # is the max number of low-level actions allowed in the episode (i.e, env.max_actions).
@@ -67,9 +66,8 @@ class Layer():
         self.actor = Actor(env,
                            self.level,
                            self.n_levels,
-                           device,
                            hidden_size=agent_params['mu_hidden_size'],
-                           lr=agent_params['mu_lr']).to(self.device)
+                           lr=agent_params['mu_lr'])
         logger.info(self.actor)
         # Initialize networks
 
@@ -77,15 +75,14 @@ class Layer():
                              self.level,
                              self.n_levels,
                              self.time_scale,
-                             device,
                              hidden_size=agent_params['q_hidden_size'],
-                             lr=agent_params['q_lr']).to(self.device)
+                             lr=agent_params['q_lr'])
         logger.info(self.critic)
 
         if self.fw:
             self.state_predictor = ForwardModel(
                 env, self.level, agent_params['fw_params'],
-                self.buffer_size).to(self.device)
+                self.buffer_size)
             logger.info(self.state_predictor)
 
         # Parameter determines degree of noise added to actions during training
@@ -134,8 +131,8 @@ class Layer():
     @torch.no_grad()
     def choose_action(self, agent, env, subgoal_test):
 
-        current_state_tensor = torch.FloatTensor(self.current_state).view(1, -1).to(self.device)
-        goal_tensor = torch.FloatTensor(self.goal).view(1, -1).to(self.device)
+        current_state_tensor = torch.FloatTensor(self.current_state).view(1, -1)
+        goal_tensor = torch.FloatTensor(self.goal).view(1, -1)
         # If testing mode or testing subgoals, action is output of actor network without noise
         if agent.test_mode or subgoal_test:
             action = self.actor(current_state_tensor, goal_tensor)[0].cpu().numpy()
@@ -321,9 +318,9 @@ class Layer():
         while True:
             # Select action to achieve goal state using epsilon-greedy policy or greedy policy if in test mode
             action, action_type, next_subgoal_test = self.choose_action(agent, env, subgoal_test)
-            current_state_tensor = torch.FloatTensor(self.current_state).view(1, -1).to(self.device)
-            goal_tensor = torch.FloatTensor(self.goal).view(1, -1).to(self.device)
-            action_tensor = torch.FloatTensor(action).view(1, -1).to(self.device)
+            current_state_tensor = torch.FloatTensor(self.current_state).view(1, -1)
+            goal_tensor = torch.FloatTensor(self.goal).view(1, -1)
+            action_tensor = torch.FloatTensor(action).view(1, -1)
             with torch.no_grad():
                 q_val = self.critic(current_state_tensor, goal_tensor, action_tensor)
             eval_data["{}q".format(train_test_prefix)] += [q_val[0].item()]
@@ -360,7 +357,7 @@ class Layer():
             attempts_made += 1
 
             if agent.env.graph and self.fw and agent.env.visualize and self.state_predictor.err_list:
-                agent_state_tensor = torch.FloatTensor(self.current_state).view(1, -1).to(self.device)
+                agent_state_tensor = torch.FloatTensor(self.current_state).view(1, -1)
                 surprise = self.state_predictor.pred_bonus(action_tensor, current_state_tensor, agent_state_tensor)
                 self.surprise_history += surprise.tolist()
 

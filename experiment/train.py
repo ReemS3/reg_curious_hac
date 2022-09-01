@@ -9,6 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # or any {DEBUG, INFO, WARN, ERROR, FATAL}
 import sys
+import random
 this_path =os.getcwd()
 sys.path.append(this_path)
 os.chdir(this_path)
@@ -18,16 +19,62 @@ import json
 from mpi4py import MPI
 import time
 from baselines import logger
-from baselines.common import set_global_seeds
-from baselines.common.mpi_moments import mpi_moments
+# from baselines.common import set_global_seeds
+# from baselines.common.mpi_moments import mpi_moments
 from baselines.util import mpi_fork, get_git_label
 import experiment.click_options as main_linker
 from baselines.util import physical_cpu_core_count, get_subdir_by_params
+# if we don't import it the environment won't be registered otherwise
+import wtm_envs.register_envs
 from queue import deque
 
 
 num_cpu = 0
 
+
+def set_global_seeds(i):
+    try:
+        import MPI
+        rank = MPI.COMM_WORLD.Get_rank()
+    except ImportError:
+        rank = 0
+
+    myseed = i  + 1000 * rank if i is not None else None
+    try:
+        import tensorflow as tf
+        tf.set_random_seed(myseed)
+    except ImportError:
+        pass
+    np.random.seed(myseed)
+    random.seed(myseed)
+
+def mpi_mean(x, axis=0, comm=None, keepdims=False):
+    x = np.asarray(x)
+    assert x.ndim > 0, "x.ndim > 0"
+    if comm is None: comm = MPI.COMM_WORLD
+    xsum = x.sum(axis=axis, keepdims=keepdims)
+    n = xsum.size
+    localsum = np.zeros(n+1, x.dtype)
+    localsum[:n] = xsum.ravel()
+    localsum[n] = x.shape[axis]
+    globalsum = np.zeros_like(localsum)
+    comm.Allreduce(localsum, globalsum, op=MPI.SUM)
+    ret = globalsum[:n].reshape(xsum.shape) / globalsum[n], globalsum[n]
+    return ret
+
+def mpi_moments(x, axis=0, comm=None, keepdims=False):
+    x = np.asarray(x)
+    assert x.ndim > 0, "x.ndim > 0"
+    mean, count = mpi_mean(x, axis=axis, comm=comm, keepdims=True)
+    sqdiffs = np.square(x - mean)
+    meansqdiff, count1 = mpi_mean(sqdiffs, axis=axis, comm=comm, keepdims=True)
+    assert count1 == count, "count1 != count"
+    std = np.sqrt(meansqdiff)
+    if not keepdims:
+        newshape = mean.shape[:axis] + mean.shape[axis+1:]
+        mean = mean.reshape(newshape)
+        std = std.reshape(newshape)
+    return mean, std, count
 
 def mpi_average(value):
     if not value:
@@ -137,6 +184,25 @@ def train(rollout_worker, evaluator,
             done_training = True
         if done_training:
             break
+def make_session(config=None, num_cpu=None, make_default=False, graph=None):
+    """Returns a session that will use <num_cpu> CPU's only"""
+    if num_cpu is None:
+        num_cpu = int(os.getenv('RCALL_NUM_CPU', multiprocessing.cpu_count()))
+    if config is None:
+        config = tf.ConfigProto(
+            allow_soft_placement=True,
+            inter_op_parallelism_threads=num_cpu,
+            intra_op_parallelism_threads=num_cpu)
+        config.gpu_options.allow_growth = True
+
+    if make_default:
+        return tf.InteractiveSession(config=config, graph=graph)
+    else:
+        return tf.Session(config=config, graph=graph)
+
+def single_threaded_session():
+    """Returns a session which will only use a single CPU"""
+    return make_session(num_cpu=1)
 
 def launch(
     env, logdir, n_epochs, num_cpu, seed, policy_save_interval, restore_policy, override_params={}, save_policies=True, **kwargs):
@@ -152,15 +218,9 @@ def launch(
                 whoami = mpi_fork(num_cpu, ['--bind-to', 'core'])
             else:
                 whoami = mpi_fork(num_cpu)  # This significantly reduces performance!
-            # try:
-            #
-            # except CalledProcessError:
-            #     # fancy version of mpi call failed, try simple version
-            #     whoami = mpi_fork(num_cpu) # This significantly reduces performance!
         if whoami == 'parent':
             sys.exit(0)
-        import baselines.common.tf_util as U
-        U.single_threaded_session().__enter__()
+        single_threaded_session().__enter__()
     rank = MPI.COMM_WORLD.Get_rank()
 
     # Configure logging

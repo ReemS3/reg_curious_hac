@@ -1,5 +1,6 @@
 from baselines.util import (store_args)
-from baselines.template.policy import Policy
+from collections import OrderedDict
+# from baselines.template.policy import Policy
 import numpy as np
 from baselines.chac.layer import Layer
 from baselines.chac.utils import prepare_env
@@ -8,18 +9,35 @@ import torch
 import time
 
 
-class CHACPolicy(Policy):
+def dims_to_shapes(input_dims):
+    return {key: tuple([val]) if val > 0 else tuple() for key, val in input_dims.items()}
+class CHACPolicy():
     @store_args
     def __init__(self, input_dims, T, rollout_batch_size, agent_params, env, verbose=False, **kwargs):
-        Policy.__init__(self, input_dims, T, rollout_batch_size, **kwargs)
+        # Policy.__init__(self, input_dims, T, rollout_batch_size, **kwargs)
 
-        if torch.cuda.is_available():
-            self.device = torch.device('cuda')
-            logger.info('Running on GPU: {} {}'.format(torch.cuda.current_device(),
-                  torch.cuda.get_device_name(torch.cuda.current_device())))
-        else:
-            self.device = torch.device('cpu')
-            logger.info('Running on CPU ...')
+        self.input_dims = input_dims
+        self.T = T
+        self.rollout_batch_size = rollout_batch_size
+
+        self.input_shapes = dims_to_shapes(self.input_dims)
+        self.dimo = self.input_dims['o']
+        self.dimg = self.input_dims['g']
+        self.dimu = self.input_dims['u']
+
+                # Prepare staging area for feeding data to the model.
+        stage_shapes = OrderedDict()
+        for key in sorted(self.input_dims.keys()):
+            if key.startswith('info_'):
+                continue
+            stage_shapes[key] = (None, *self.input_shapes[key])
+        for key in ['o', 'g']:
+            stage_shapes[key + '_2'] = stage_shapes[key]
+        stage_shapes['r'] = (None,)
+        self.stage_shapes = stage_shapes
+
+        self.device = torch.device('cpu')
+        logger.info('Running on CPU ...')
 
         self.verbose = verbose
         self.n_levels = agent_params['n_levels']
@@ -88,7 +106,7 @@ class CHACPolicy(Policy):
         self.subgoal_test_perc = agent_params["subgoal_test_perc"]
         # Create agent with number of levels specified by user
         self.layers = [
-            Layer(i, self.env, agent_params, self.device)
+            Layer(i, self.env, agent_params)
             for i in range(self.n_levels)
         ]
 
