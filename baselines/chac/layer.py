@@ -65,18 +65,14 @@ class Layer():
         # Initialize networks
         self.actor = Actor(env,
                            self.level,
-                           self.n_levels,
-                           hidden_size=agent_params['mu_hidden_size'],
-                           lr=agent_params['mu_lr'])
+                           self.n_levels)
         logger.info(self.actor)
         # Initialize networks
 
         self.critic = Critic(env,
                              self.level,
                              self.n_levels,
-                             self.time_scale,
-                             hidden_size=agent_params['q_hidden_size'],
-                             lr=agent_params['q_lr'])
+                             self.time_scale)
         logger.info(self.critic)
 
         if self.fw:

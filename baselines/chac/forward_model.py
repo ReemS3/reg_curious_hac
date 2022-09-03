@@ -6,11 +6,13 @@ from baselines.chac.utils import Base, mlp
 
 
 class ForwardModel(Base):
+    """The forward Model is created to compute the prediction error, 
+    which provides an intrinsic reward that represents the curiosity."""
     def __init__(self, env, level, mb_params, err_list_size):
 
         super(ForwardModel, self).__init__()
         self.model_name = 'model_' + str(level)
-
+        # primitive action or subgoal
         action_dim = env.action_dim if level == 0 else env.subgoal_dim
 
         self.hidden_sizes = [
