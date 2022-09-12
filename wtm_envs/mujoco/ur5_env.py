@@ -35,15 +35,8 @@ class UR5Env(WTMEnv):
         :param subgoal_thresholds:
         """
 
-        # assert n_objects == 2, "Cannot have more than 2 objects for this environment at the time being!"
-
-        # self.gripper_extra_height = gripper_extra_height
-        # self.block_gripper = block_gripper
-        # self.target_in_the_air = target_in_the_air
-        # self.target_offset = target_offset
         self.reward_type = reward_type
 
-        # self.gripper_goal = gripper_goal
 
         self.name = name
         self.step_ctr = 0

@@ -18,12 +18,10 @@ import numpy as np
 import json
 from mpi4py import MPI
 import time
-from baselines import logger
-# from baselines.common import set_global_seeds
-# from baselines.common.mpi_moments import mpi_moments
-from baselines.util import mpi_fork, get_git_label
+from src import logger
+from src.util import mpi_fork, get_git_label
 import experiment.click_options as main_linker
-from baselines.util import physical_cpu_core_count, get_subdir_by_params
+from src.util import physical_cpu_core_count, get_subdir_by_params
 # if we don't import it the environment won't be registered otherwise
 import wtm_envs.register_envs
 from queue import deque
@@ -290,10 +288,6 @@ def launch(
     evaluator = RolloutWorker(params['make_env'], policy, dims, logger, **eval_params)
     evaluator.seed(rank_seed)
 
-    # early_stop_success_rate = kwargs['early_stop_success_rate'] / 100
-    # if 'early_stop_data_column' not in kwargs.keys():
-    #     kwargs['early_stop_data_column'] = None
-    #     kwargs['early_stop_threshold'] = None
     train(
         logdir=logdir, rollout_worker=rollout_worker,
         evaluator=evaluator, n_epochs=n_epochs, n_test_rollouts=params['n_test_rollouts'],
@@ -301,7 +295,6 @@ def launch(
         policy_save_interval=policy_save_interval, save_policies=save_policies,
         early_stop_data_column=kwargs['early_stop_data_column'], early_stop_threshold=kwargs['early_stop_threshold']
     )
-    # print("Done training for process with rank {}".format(rank))
 
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
@@ -358,13 +351,6 @@ def main(ctx, **kwargs):
             # Check if training is necessary. It is not if the last run for this configuration did not achieve at least X% success rate.
             min_succ_rate = 0.08
             pass
-            # last_res = load_results(last_res_file)
-            # if len(last_res['test/success_rate']) == kwargs['n_epochs']:
-            #     last_succ_rates = np.mean(last_res['test/success_rate'][-4:])
-            #     if last_succ_rates < min_succ_rate:
-            #         do_train = False
-            #         print("Last time this did only achieve {} success rate avg over last 4 epochs... skipping a new test!".format(
-            #             last_succ_rates))
         except:
             logger.warn("Could not load progress data {}".format(last_res_file))
     if trial_no > max_ctr:

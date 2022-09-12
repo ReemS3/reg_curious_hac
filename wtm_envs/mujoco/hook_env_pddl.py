@@ -1,5 +1,5 @@
 import numpy as np
-from baselines.her_pddl.pddl.propositional_planner import Propositional_Planner
+from src.her_pddl.pddl.propositional_planner import Propositional_Planner
 from gym.envs.robotics import rotations
 import time
 from wtm_envs.mujoco.pddl_env import PDDLEnv

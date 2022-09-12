@@ -1,2 +1,0 @@
-policy/steps,test/episodes,epoch,test_1/avg_q,test_1/n_subgoals,train/success_rate,test_0/avg_q,test_1/subgoal_succ_rate,test/success_rate,train/episodes
-18225.0,25.0,0,-0.06712526161955641,675.0,nan,-0.06706406859872135,0.0,0.0,0.0
