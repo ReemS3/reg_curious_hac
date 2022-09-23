@@ -6,6 +6,7 @@ import json
 import time
 import datetime
 import tempfile
+from experiment.train import path_params
 from collections import defaultdict
 
 DEBUG = 10
@@ -160,10 +161,6 @@ class TensorBoardOutputFormat(KVWriter):
         self.launchPanels()
 
     def launchPanels(self):
-        # import wandb
-        # import logging
-        # logging.getLogger('werkzeug').setLevel(logging.ERROR)
-        # wandb.init(project="RCHAC", entity="rfarah")
         from tensorboard import program
         import logging
         logging.getLogger('werkzeug').setLevel(logging.ERROR)
@@ -171,9 +168,7 @@ class TensorBoardOutputFormat(KVWriter):
         # tb = program.TensorBoard(default.get_plugins(), default.get_assets_zip_provider())
         port = 6006
         while True:
-            # tb.configure(argv=[None, '--logdir', self.path, '--port', str(port)])
             tb.configure(argv=[None, '--logdir', self.data_read_dir, '--port', str(port)])
-            # tb.configure(argv=[None, '--logdir', self.data_read_dir, '--port', str(port), '--embeddings_data', 'None'])
             try:
                 url = tb.launch()
                 break
@@ -441,44 +436,6 @@ class scoped_configure(object):
         Logger.CURRENT.close()
         Logger.CURRENT = self.prevlogger
 
-# ================================================================
-
-def _demo():
-    info("hi")
-    debug("shouldn't appear")
-    set_level(DEBUG)
-    debug("should appear")
-    dir = "/tmp/testlogging"
-    if os.path.exists(dir):
-        shutil.rmtree(dir)
-    configure(dir=dir, format_strs=['stdout', 'tensorboard'])
-    logkv("a", 3)
-    logkv("b", 2.5)
-    dumpkvs()
-    logkv("b", -2.5)
-    logkv("a", 5.5)
-    dumpkvs()
-    info("^^^ should see a = 5.5")
-    logkv_mean("b", -22.5)
-    logkv_mean("b", -44.4)
-    logkv("a", 5.5)
-    dumpkvs()
-    info("^^^ should see b = 33.3")
-
-    logkv("b", -2.5)
-    dumpkvs()
-
-    logkv("a", "longasslongasslongasslongasslongasslongassvalue")
-    dumpkvs()
-
-    for i in range(100):
-        logkv("a", i)
-        logkv("b", i*2)
-        info("i={}".format(i))
-        dumpkvs()
-        time.sleep(0.5)
-
-
 
 # ================================================================
 # Readers
@@ -532,6 +489,3 @@ def read_tb(path):
 
 # configure the default logger on import
 _configure_default_logger()
-
-if __name__ == "__main__":
-    _demo()

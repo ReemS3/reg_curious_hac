@@ -13,6 +13,8 @@ import re
 # Flat vectors
 # ================================================================
 
+# on macOS, run sysctl -n hw.ncpu and accordingly change num_cpus
+num_cpus = 12
 def var_shape(x):
     out = x.get_shape().as_list()
     assert all(isinstance(a, int) for a in out), \
@@ -53,7 +55,6 @@ def store_args(method):
 
 def get_subdir_by_params(path_params, ctr=0):
     param_strs = []
-
     def shorten_split_elem(elem_str, chars_to_split):
         split_elems = elem_str.split(chars_to_split[0])
         short_split_elem_strs = []
@@ -80,10 +81,6 @@ def get_subdir_by_params(path_params, ctr=0):
 
     subdir_str = "|".join(param_strs)
     subdir_str += "|" + str(ctr)
-
-    # param_subdir = "_".join(
-    #     ['{}:{}'.format("".join([s[:2] for s in p.split("_")]), str(v).split(":")[-1]) for p, v in
-    #      sorted(path_params.items()) if str(v) != '']) + "_" + str(ctr)
     return subdir_str
 
 def get_git_label():
@@ -225,13 +222,16 @@ def prob_dist2discrete(prob_dist):
 
 def physical_cpu_core_count():
     try:
-        res = open('/proc/cpuinfo').read()
-        idx = res.find('cpu cores') + len("cpu cores")
-        idx = res.find(": ", idx) + len(": ")
-        nl_idx = res.find("\n", idx)
-        res = res[idx:nl_idx]
-        res = int(res)
-
+        # works for Linux
+        # res = open('/proc/cpuinfo').read()
+        # idx = res.find('cpu cores') + len("cpu cores")
+        # idx = res.find(": ", idx) + len(": ")
+        # nl_idx = res.find("\n", idx)
+        # res = res[idx:nl_idx]
+        # res = int(res)
+        
+        # for Macs with 12 cpus 
+        res = num_cpus
         if res > 0:
             return res
     except IOError:

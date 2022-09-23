@@ -50,6 +50,8 @@ def cached_make_env(make_env):
 def prepare_params(kwargs):
     # CHAC params
     chac_params = dict()
+    env_name = kwargs["env_name"]
+    kwargs["make_env"] = gym.make(env_name)
 
     env_name = kwargs['env_name']
 

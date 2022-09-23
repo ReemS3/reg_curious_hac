@@ -42,7 +42,6 @@ class Critic(Base):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
-        # TODO: explain this
         return torch.sigmoid(self.fc4(x) + self.q_offset) * self.q_limit
 
     def reset_parameters(self):

@@ -1,0 +1,35 @@
+{
+    "os": "Darwin-21.6.0-x86_64-i386-64bit",
+    "python": "3.7.13",
+    "heartbeatAt": "2022-09-16T16:06:53.534795",
+    "startedAt": "2022-09-16T16:06:52.835564",
+    "docker": null,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [
+        "--render",
+        "0",
+        "--env",
+        "CausalDependenciesMujocoEnv-o1-v0",
+        "--n_epochs",
+        "3000",
+        "--eta",
+        "0.75",
+        "--regularization",
+        "1",
+        "--restore_policy",
+        "./data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_latest.pkl"
+    ],
+    "state": "running",
+    "program": "experiment/train.py",
+    "codePath": "experiment/train.py",
+    "git": {
+        "remote": "https://github.com/Niklas-KOI/DRL22.git",
+        "commit": "d4a688668d6f839de7964abe23e79598533c074f"
+    },
+    "email": "reemfarah96@gmail.com",
+    "root": "/Users/farah/Desktop/uni/DRL22",
+    "host": "NB324.fritz.box",
+    "username": "farah",
+    "executable": "/usr/local/anaconda3/envs/DRL22_new/bin/python3.7"
+}

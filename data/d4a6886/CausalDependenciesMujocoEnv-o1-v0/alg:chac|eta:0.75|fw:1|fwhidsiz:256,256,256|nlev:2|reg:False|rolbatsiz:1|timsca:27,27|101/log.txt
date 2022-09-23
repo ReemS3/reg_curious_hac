@@ -1,0 +1,160 @@
+Starting process id: 16910
+T: 50
+alg: chac
+algorithm: src.chac
+atomic_noise: 0.2
+base_logdir: data
+batch_size: 1024
+bind_core: 0
+buffer_size: 500
+chac_params: {}
+early_stop_data_column: test/success_rate
+early_stop_threshold: 100.0
+env_name: CausalDependenciesMujocoEnv-o1-v0
+eta: 0.75
+fw: 1
+fw_hidden_size: 256,256,256
+fw_lr: 0.001
+gamma: 0.98
+graph: 1
+info: 
+make_env: <function prepare_params.<locals>.make_env at 0x7fbd20e9bf80>
+max_try_idx: 199
+mu_hidden_size: 64
+mu_lr: 0.001
+n_episodes: 100
+n_levels: 2
+n_pre_episodes: 30
+n_test_rollouts: 25
+n_train_batches: 10
+n_train_rollouts: 100
+num_threads: 1
+q_hidden_size: 64
+q_lr: 0.001
+random_action_perc: 0.3
+regularization: False
+render: 0
+rollout_batch_size: 1
+subgoal_noise: 0.2
+subgoal_test_perc: 0.3
+time_scales: 27,27
+try_start_idx: 100
+use_mpi: False
+verbose: False
+
+*** Warning ***
+You are running src.chac with just a single MPI worker. This will work, but the HER experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+dims: action = 2, subgoal = 2, end_goal = 2
+subgoal_bounds: symmetric [0.2 0.2], offset [0.922 0.25 ]
+Running on CPU ...
+Creating a CHAC agent
+
+Hierarchy Level 0 with time scale 27
+Actor(
+  (fc1): Linear(in_features=35, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=2, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=35, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=33, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+
+Hierarchy Level 1 with time scale 27
+Actor(
+  (fc1): Linear(in_features=35, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=2, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=35, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=33, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+Training epoch 0
+Time for epoch 0: 492.98. Rollout time: 413.52, Training time: 79.43
+Evaluating epoch 0
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:False|rolbatsiz:1|timsca:27,27|101
+------------------------------------------------------
+| epoch                     | 0                      |
+| policy/steps              | 88829.0                |
+| test/episodes             | 25.0                   |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -0.18107760148424046   |
+| test_1/avg_q              | -22.840438774617716    |
+| test_1/n_subgoals         | 677.0                  |
+| test_1/subgoal_succ_rate  | 0.0029542097488921715  |
+| train/episodes            | 100.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -1.9082909252993876    |
+| train_0/current_q         | -0.13454925538312654   |
+| train_0/fw_bonus          | -0.9985430777072907    |
+| train_0/fw_loss           | 0.00032206324685830624 |
+| train_0/mu_grads          | -0.002419500984251499  |
+| train_0/mu_grads_std      | 0.10551631525158882    |
+| train_0/mu_loss           | 0.1498807504625171     |
+| train_0/next_q            | -0.14854996537316728   |
+| train_0/q_grads           | 0.013753179833292961   |
+| train_0/q_grads_std       | 0.10974791273474693    |
+| train_0/q_loss            | 0.49961293575947485    |
+| train_0/reward            | -0.6135029579978436    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.00068359375          |
+| train_0/target_q          | -0.6899686277993007    |
+| train_1/avg_q             | -10.319966665876105    |
+| train_1/current_q         | -15.337481457888051    |
+| train_1/fw_bonus          | -0.9927281081676483    |
+| train_1/fw_loss           | 0.002536103408783674   |
+| train_1/mu_grads          | 0.009948496520519257   |
+| train_1/mu_grads_std      | 0.10930023714900017    |
+| train_1/mu_loss           | 18.396231889800013     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -18.37142568929133     |
+| train_1/q_grads           | 0.028776295110583307   |
+| train_1/q_grads_std       | 0.1310697689652443     |
+| train_1/q_loss            | 39.85814703007186      |
+| train_1/reward            | -2.4542367112167995    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.00615234375          |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.04111111111111111    |
+| train_1/target_q          | -15.189566110043822    |
+------------------------------------------------------
+Saving periodic policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:False|rolbatsiz:1|timsca:27,27|101/policy_0.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:False|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Training epoch 1

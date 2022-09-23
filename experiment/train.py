@@ -1,4 +1,5 @@
 import os
+import wandb
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # Level | Level for Humans | Level Description
 #  -------|------------------|------------------------------------
@@ -26,10 +27,10 @@ from src.util import physical_cpu_core_count, get_subdir_by_params
 import wtm_envs.register_envs
 from queue import deque
 
+# on macOS, run sysctl -n hw.ncpu and accordingly change num_cpus
+num_cpu = 12
 
-num_cpu = 0
-
-
+path_params = {}
 def set_global_seeds(i):
     try:
         import MPI
@@ -110,7 +111,7 @@ def train(rollout_worker, evaluator,
         logger.info("Evaluating epoch {}".format(epoch))
         evaluator.clear_history()
 
-        for _ in range(n_test_rollouts):
+        for __ in range(n_test_rollouts):
             evaluator.generate_rollouts()
 
         # record logs
@@ -123,10 +124,11 @@ def train(rollout_worker, evaluator,
             logger.record_tabular(key, mpi_average(val))
 
         success_rate = mpi_average(evaluator.current_success_rate())
+        wandb.log({'success_rate': success_rate})
+      
         success_rates.append(success_rate)
 
         early_stop_current_val = logger.getkvs()[kwargs['early_stop_data_column']]
-        # print("Rank {} esv: {}".format(rank, early_stop_current_val))
         early_stop_vals.append(early_stop_current_val)
 
         if rank == 0:
@@ -206,9 +208,9 @@ def launch(
     env, logdir, n_epochs, num_cpu, seed, policy_save_interval, restore_policy, override_params={}, save_policies=True, **kwargs):
     # Fork for multi-CPU MPI implementation.
     if num_cpu > 1:
-        # whoami = mpi_fork(num_cpu)
         n_cpus_available = physical_cpu_core_count()
-        if n_cpus_available < num_cpu:
+        print("n_cpus_available ", n_cpus_available, "num_cpu ", num_cpu)
+        if n_cpus_available <= num_cpu:
             whoami = mpi_fork(num_cpu) # This significantly reduces performance!
             assert kwargs['bind_core'] == 0, "Too high CPU count when trying to bind MPI workers to core. You require {} CPUs but have only {}".format(num_cpu, n_cpus_available)
         else:
@@ -303,7 +305,7 @@ def launch(
 @main_linker.click_main
 @click.pass_context
 def main(ctx, **kwargs):
-    global config, RolloutWorker, policy_linker, num_cpu
+    global config, RolloutWorker, policy_linker, num_cpu, path_params
     config, RolloutWorker = main_linker.import_creator(kwargs['algorithm'])
     policy_args = ctx.forward(main_linker.get_policy_click)
     cmd_line_update_args = {ctx.args[i][2:]: type(policy_args[ctx.args[i][2:]])(ctx.args[i + 1]) for i in
@@ -323,7 +325,16 @@ def main(ctx, **kwargs):
     max_ctr = kwargs['max_try_idx']
     path_params = kwargs['override_params']
     alg_str = kwargs['algorithm'].split(".")[1]
-    path_params.update({'info': kwargs['info'], 'alg': alg_str})
+    path_params.update({'regularization': kwargs['regularization'], 'alg': alg_str})
+
+    import wandb
+    wandb.init(project="RCHAC", entity="rfarah")
+    wandb.config = {"curiosity":path_params["fw"],
+                    "eta":path_params["eta"],
+                    "n-level":path_params["n_levels"],
+                    "timescale":path_params["time_scales"], 
+                    "regularization":path_params["regularization"]}
+
     git_label = get_git_label()
     while subdir_exists:
         param_subdir = get_subdir_by_params(path_params, ctr)

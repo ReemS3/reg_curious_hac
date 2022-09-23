@@ -52,9 +52,7 @@ DEFAULT_PARAMS = {
     'norm_clip': 5,  # normalized observations are cropped to this values
 }
 
-POLICY_ACTION_PARAMS = {
-
-    }
+POLICY_ACTION_PARAMS = {}
 
 CACHED_ENVS = {}
 
@@ -86,7 +84,7 @@ random_eps=self.random_eps if not self.exploit else 0.,
 use_target_net=self.use_target_net)
 """
 
-OVERRIDE_PARAMS_LIST = ['network_class', 'rollout_batch_size', 'n_batches', 'batch_size', 'replay_k','replay_strategy', 'rep_network_class']
+OVERRIDE_PARAMS_LIST = ['network_class',  'replay_k','replay_strategy', 'rep_network_class']
 
 ROLLOUT_PARAMS_LIST = ['T', 'rollout_batch_size', 'gamma', 'noise_eps', 'random_eps', '_replay_strategy', 'env_name']
 

@@ -13,9 +13,9 @@ click.option('--q_hidden_size', type=int, default=64, help='Hidden size used for
 click.option('--mu_lr', type=float, default=0.001, help='Actor learning rate'),
 click.option('--mu_hidden_size', type=int, default=64, help='Hidden size used for the actor network'),
 
-click.option('--time_scales', type=str, default='25,10', help='Steps per level from lowest to highest also used to define penalties'),
+click.option('--time_scales', type=str, default='27,27', help='Steps per level from lowest to highest also used to define penalties'),
 click.option('--subgoal_test_perc', type=float, default=0.3, help='The percentage of subgoals to test.'),
-click.option('--n_levels', type=int, default=2, help='Total number hierarchies'),
+click.option('--n_levels', type=int, default=2, help='Total level of hierarchies'),
 
 click.option('--n_pre_episodes', type=int, default=30, help='Number of finished episodes before training networks'),
 click.option('--random_action_perc', type=float, default=0.3, help='Percentage of taking random actions'),

@@ -71,7 +71,7 @@ class Rollout:
         self.reset_all_rollouts()
 
         if return_states:
-            mj_states = [[] for _ in range(self.rollout_batch_size)]
+            mj_states = [[] for __ in range(self.rollout_batch_size)]
 
         # compute observations
         o = np.empty((self.rollout_batch_size, self.dims['o']), np.float32)  # observations

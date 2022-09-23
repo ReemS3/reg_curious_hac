@@ -1,0 +1,1793 @@
+Starting process id: 51438
+T: 50
+alg: chac
+algorithm: src.chac
+atomic_noise: 0.2
+base_logdir: data
+batch_size: 1024
+bind_core: 0
+buffer_size: 500
+chac_params: {}
+early_stop_data_column: test/success_rate
+early_stop_threshold: 100.0
+env_name: CausalDependenciesMujocoEnv-o1-v0
+eta: 0.5
+fw: 1
+fw_hidden_size: 256,256,256
+fw_lr: 0.001
+gamma: 0.98
+graph: 1
+info: 
+make_env: <function prepare_params.<locals>.make_env at 0x7fdfa112a440>
+max_try_idx: 199
+mu_hidden_size: 64
+mu_lr: 0.001
+n_episodes: 100
+n_levels: 2
+n_pre_episodes: 30
+n_test_rollouts: 25
+n_train_batches: 40
+n_train_rollouts: 100
+num_threads: 1
+q_hidden_size: 64
+q_lr: 0.001
+random_action_perc: 0.3
+regularization: True
+render: 0
+rollout_batch_size: 1
+subgoal_noise: 0.2
+subgoal_test_perc: 0.3
+time_scales: 27,27
+try_start_idx: 100
+use_mpi: False
+verbose: False
+
+*** Warning ***
+You are running src.chac with just a single MPI worker. This will work, but the HER experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+dims: action = 2, subgoal = 2, end_goal = 2
+subgoal_bounds: symmetric [0.2 0.2], offset [0.922 0.25 ]
+Running on CPU ...
+Creating a CHAC agent
+
+Hierarchy Level 0 with time scale 27
+Actor(
+  (fc1): Linear(in_features=35, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=2, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=35, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=33, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+
+Hierarchy Level 1 with time scale 27
+Actor(
+  (fc1): Linear(in_features=35, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=2, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=35, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=33, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+Training epoch 0
+Time for epoch 0: 720.82. Rollout time: 410.25, Training time: 310.51
+Evaluating epoch 0
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 0                      |
+| policy/steps              | 84654.0                |
+| test/episodes             | 25.0                   |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -4.048687529690564     |
+| test_1/avg_q              | -14.148024872969634    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 100.0                  |
+| train/success_rate        | 0.01                   |
+| train_0/avg_q             | -1.277265458227941     |
+| train_0/current_q         | -3.2283068368875227    |
+| train_0/fw_bonus          | -0.9992624819278717    |
+| train_0/fw_loss           | 0.00020697544168797323 |
+| train_0/mu_grads          | -0.0023682318336796016 |
+| train_0/mu_grads_std      | 0.1562439315021038     |
+| train_0/mu_loss           | 3.03786518454766       |
+| train_0/next_q            | -3.036660033897223     |
+| train_0/q_grads           | 0.02689939900301397    |
+| train_0/q_grads_std       | 0.15599226653575898    |
+| train_0/q_loss            | 0.4834160771094701     |
+| train_0/reward            | -0.731589250498655     |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0005615234375        |
+| train_0/target_q          | -3.2261960125700186    |
+| train_1/avg_q             | -7.6678924690639025    |
+| train_1/current_q         | -8.84034025820126      |
+| train_1/fw_bonus          | -0.9959543660283089    |
+| train_1/fw_loss           | 0.0015331422357121483  |
+| train_1/mu_grads          | 0.00022074803164287004 |
+| train_1/mu_grads_std      | 0.12240740526467561    |
+| train_1/mu_loss           | 9.890992893164285      |
+| train_1/n_subgoals        | 2699.0                 |
+| train_1/next_q            | -8.66830257577541      |
+| train_1/q_grads           | 0.012993130646646023   |
+| train_1/q_grads_std       | 0.209058029204607      |
+| train_1/q_loss            | 4.692619526994887      |
+| train_1/reward            | -1.991788219990849     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0038818359375        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.11374583178955168    |
+| train_1/target_q          | -8.827437244424864     |
+------------------------------------------------------
+Saving periodic policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_0.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Training epoch 1
+Time for epoch 1: 592.18. Rollout time: 372.92, Training time: 219.21
+Evaluating epoch 1
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-----------------------------------------------------
+| epoch                     | 1                     |
+| policy/steps              | 161337.0              |
+| test/episodes             | 50.0                  |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -3.514193487490594    |
+| test_1/avg_q              | -11.50787257379206    |
+| test_1/n_subgoals         | 693.0                 |
+| test_1/subgoal_succ_rate  | 0.025974025974025976  |
+| train/episodes            | 200.0                 |
+| train/success_rate        | 0.03                  |
+| train_0/avg_q             | -2.979394065362993    |
+| train_0/current_q         | -2.044243411916861    |
+| train_0/fw_bonus          | -0.999293477833271    |
+| train_0/fw_loss           | 0.0001985251914447872 |
+| train_0/mu_grads          | -0.005219327379018068 |
+| train_0/mu_grads_std      | 0.18967484198510648   |
+| train_0/mu_loss           | 1.9443254213121643    |
+| train_0/next_q            | -1.9375042795694433   |
+| train_0/q_grads           | 0.024407033016905187  |
+| train_0/q_grads_std       | 0.16639894619584084   |
+| train_0/q_loss            | 0.7020179470326385    |
+| train_0/reward            | -0.7281623660863261   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.00068359375         |
+| train_0/target_q          | -2.205022113184394    |
+| train_1/avg_q             | -12.738671003854348   |
+| train_1/current_q         | -8.877485966607912    |
+| train_1/fw_bonus          | -0.9959055230021476   |
+| train_1/fw_loss           | 0.0015447615645825864 |
+| train_1/mu_grads          | 0.0017845725786173716 |
+| train_1/mu_grads_std      | 0.13917722404003144   |
+| train_1/mu_loss           | 9.804888829185327     |
+| train_1/n_subgoals        | 2649.0                |
+| train_1/next_q            | -8.590485855490464    |
+| train_1/q_grads           | 0.010535829234868288  |
+| train_1/q_grads_std       | 0.23335427269339562   |
+| train_1/q_loss            | 5.100189327773327     |
+| train_1/reward            | -1.8943761030772293   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0046142578125       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.23103057757644394   |
+| train_1/target_q          | -8.882465707551606    |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Training epoch 2
+Time for epoch 2: 670.84. Rollout time: 441.99, Training time: 228.80
+Evaluating epoch 2
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-----------------------------------------------------
+| epoch                     | 2                     |
+| policy/steps              | 250318.0              |
+| test/episodes             | 75.0                  |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -27.0                 |
+| test_1/avg_q              | -14.924703227723642   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 300.0                 |
+| train/success_rate        | 0.02                  |
+| train_0/avg_q             | -19.702242982924925   |
+| train_0/current_q         | -4.79738930612043     |
+| train_0/fw_bonus          | -0.9994386956095695   |
+| train_0/fw_loss           | 0.0001589403716934612 |
+| train_0/mu_grads          | -0.008177477912977339 |
+| train_0/mu_grads_std      | 0.21070016138255596   |
+| train_0/mu_loss           | 4.616191591686736     |
+| train_0/next_q            | -4.604617846446142    |
+| train_0/q_grads           | 0.025576693285256625  |
+| train_0/q_grads_std       | 0.18351562805473803   |
+| train_0/q_loss            | 0.2920858719647338    |
+| train_0/reward            | -0.719934187104809    |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0013427734375       |
+| train_0/target_q          | -4.788144026102751    |
+| train_1/avg_q             | -12.196328720232627   |
+| train_1/current_q         | -2.289468153194788    |
+| train_1/fw_bonus          | -0.9971171602606773   |
+| train_1/fw_loss           | 0.001256520746392198  |
+| train_1/mu_grads          | 0.008485960471443833  |
+| train_1/mu_grads_std      | 0.14291046895086765   |
+| train_1/mu_loss           | 1.5423113490137088    |
+| train_1/n_subgoals        | 2651.0                |
+| train_1/next_q            | -0.5515880463093454   |
+| train_1/q_grads           | 0.006899028713814914  |
+| train_1/q_grads_std       | 0.25979275405406954   |
+| train_1/q_loss            | 3.5990958399765973    |
+| train_1/reward            | -1.9416493957003695   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0040283203125       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.012070916635231988  |
+| train_1/target_q          | -2.3139384281117414   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Training epoch 3
+Time for epoch 3: 683.65. Rollout time: 456.60, Training time: 227.00
+Evaluating epoch 3
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 3                      |
+| policy/steps              | 341443.0               |
+| test/episodes             | 100.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -26.748116400134933    |
+| test_1/avg_q              | -14.5759773151802      |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 400.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -26.99999024431809     |
+| train_0/current_q         | -3.1368613954865534    |
+| train_0/fw_bonus          | -0.999538654088974     |
+| train_0/fw_loss           | 0.00013168674104235834 |
+| train_0/mu_grads          | -0.00988959230016917   |
+| train_0/mu_grads_std      | 0.21755571588873862    |
+| train_0/mu_loss           | 3.127095569384257      |
+| train_0/next_q            | -3.1250125827486612    |
+| train_0/q_grads           | 0.021685055270791054   |
+| train_0/q_grads_std       | 0.19440199956297874    |
+| train_0/q_loss            | 0.3876496644025039     |
+| train_0/reward            | -0.7174329030873196    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0030517578125        |
+| train_0/target_q          | -3.6423934061767285    |
+| train_1/avg_q             | -14.286868321351829    |
+| train_1/current_q         | -18.20949099447713     |
+| train_1/fw_bonus          | -0.9974508285522461    |
+| train_1/fw_loss           | 0.0011771403660532087  |
+| train_1/mu_grads          | 0.010630172095261514   |
+| train_1/mu_grads_std      | 0.14399403035640718    |
+| train_1/mu_loss           | 27.981506832234096     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -26.98090718010921     |
+| train_1/q_grads           | -0.0003290277367341332 |
+| train_1/q_grads_std       | 0.29160037115216253    |
+| train_1/q_loss            | 93.87519509162257      |
+| train_1/reward            | -1.9373606678069337    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0035888671875        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -18.475530707768947    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 4
+Time for epoch 4: 678.66. Rollout time: 450.71, Training time: 227.87
+Evaluating epoch 4
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 4                      |
+| policy/steps              | 432542.0               |
+| test/episodes             | 125.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -23.603858610476504    |
+| test_1/avg_q              | -13.907974970940733    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 500.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -23.05739811310008     |
+| train_0/current_q         | -5.904750147136724     |
+| train_0/fw_bonus          | -0.9995919495821       |
+| train_0/fw_loss           | 0.0001171567315395805  |
+| train_0/mu_grads          | -0.004629128612577915  |
+| train_0/mu_grads_std      | 0.23027336709201335    |
+| train_0/mu_loss           | 5.770435811273377      |
+| train_0/next_q            | -5.793685961640013     |
+| train_0/q_grads           | 0.022444211691617966   |
+| train_0/q_grads_std       | 0.20879985019564629    |
+| train_0/q_loss            | 0.4436629436705508     |
+| train_0/reward            | -0.7138706852623727    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0037353515625        |
+| train_0/target_q          | -6.007134392871654     |
+| train_1/avg_q             | -14.155740649722322    |
+| train_1/current_q         | -3.2980792575852433    |
+| train_1/fw_bonus          | -0.9979122683405877    |
+| train_1/fw_loss           | 0.0010673659446183593  |
+| train_1/mu_grads          | 0.009784355550073088   |
+| train_1/mu_grads_std      | 0.14544912837445736    |
+| train_1/mu_loss           | 2.900943905799985      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -1.8894538384651072    |
+| train_1/q_grads           | -0.001979285274865106  |
+| train_1/q_grads_std       | 0.3176445096731186     |
+| train_1/q_loss            | 3.1777168054845406     |
+| train_1/reward            | -1.9442564258832136    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.003125               |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.00037037037037037035 |
+| train_1/target_q          | -3.3060365394883844    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 5
+Time for epoch 5: 698.68. Rollout time: 463.20, Training time: 235.43
+Evaluating epoch 5
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 5                      |
+| policy/steps              | 523667.0               |
+| test/episodes             | 150.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.965844300614316    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 600.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -26.116130512206112    |
+| train_0/current_q         | -6.595310022058273     |
+| train_0/fw_bonus          | -0.9996955424547196    |
+| train_0/fw_loss           | 8.891938141459832e-05  |
+| train_0/mu_grads          | -0.0024598783464170994 |
+| train_0/mu_grads_std      | 0.2318916566669941     |
+| train_0/mu_loss           | 6.6012093724757275     |
+| train_0/next_q            | -6.6015932780207915    |
+| train_0/q_grads           | 0.025273944623768328   |
+| train_0/q_grads_std       | 0.22336647249758243    |
+| train_0/q_loss            | 0.3005455482878704     |
+| train_0/reward            | -0.7139224751597795    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0095458984375        |
+| train_0/target_q          | -7.050555886475145     |
+| train_1/avg_q             | -13.659881752628378    |
+| train_1/current_q         | -1.9675394265618777    |
+| train_1/fw_bonus          | -0.9978791266679764    |
+| train_1/fw_loss           | 0.0010752481699455529  |
+| train_1/mu_grads          | 0.013159297150559723   |
+| train_1/mu_grads_std      | 0.147909314930439      |
+| train_1/mu_loss           | 1.011611636722647      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -0.012002368033462175  |
+| train_1/q_grads           | -0.0036189233884215354 |
+| train_1/q_grads_std       | 0.32969971671700476    |
+| train_1/q_loss            | 1.4245712361642267     |
+| train_1/reward            | -1.972706656093942     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0032470703125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -1.9816675606513265    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 6
+Time for epoch 6: 710.23. Rollout time: 465.65, Training time: 244.53
+Evaluating epoch 6
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 6                       |
+| policy/steps              | 614792.0                |
+| test/episodes             | 175.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -13.71702133343288      |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 700.0                   |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -8.948252216847825      |
+| train_0/fw_bonus          | -0.99982138723135       |
+| train_0/fw_loss           | 5.461138525788556e-05   |
+| train_0/mu_grads          | -0.004777825472410768   |
+| train_0/mu_grads_std      | 0.2327558398246765      |
+| train_0/mu_loss           | 8.924050226693439       |
+| train_0/next_q            | -8.918131702135437      |
+| train_0/q_grads           | 0.02697433903813362     |
+| train_0/q_grads_std       | 0.2267669890075922      |
+| train_0/q_loss            | 0.16969323405003758     |
+| train_0/reward            | -0.7076377428689739     |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.013818359375          |
+| train_0/target_q          | -9.0852892391527        |
+| train_1/avg_q             | -13.729599890340545     |
+| train_1/current_q         | -1.9833491510302697     |
+| train_1/fw_bonus          | -0.9980964958667755     |
+| train_1/fw_loss           | 0.0010235384077532216   |
+| train_1/mu_grads          | 0.013382145995274186    |
+| train_1/mu_grads_std      | 0.14807098992168904     |
+| train_1/mu_loss           | 1.0000031339641318      |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -3.2557576606613883e-06 |
+| train_1/q_grads           | -0.005228526121936738   |
+| train_1/q_grads_std       | 0.34099115058779716     |
+| train_1/q_loss            | 0.15909429749055767     |
+| train_1/reward            | -1.9888919977827755     |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.0026611328125         |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -1.9888937501726958     |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 7
+Time for epoch 7: 744.20. Rollout time: 495.53, Training time: 248.61
+Evaluating epoch 7
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 7                      |
+| policy/steps              | 705917.0               |
+| test/episodes             | 200.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.770536182337134    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 800.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -9.294408155556374     |
+| train_0/fw_bonus          | -0.999892695248127     |
+| train_0/fw_loss           | 3.517242134876142e-05  |
+| train_0/mu_grads          | -0.0047740167239680885 |
+| train_0/mu_grads_std      | 0.23266155570745467    |
+| train_0/mu_loss           | 9.28820508848219       |
+| train_0/next_q            | -9.289784300247945     |
+| train_0/q_grads           | 0.029296984849497675   |
+| train_0/q_grads_std       | 0.23700954690575599    |
+| train_0/q_loss            | 0.19380369366226674    |
+| train_0/reward            | -0.7084912665683077    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0731689453125        |
+| train_0/target_q          | -9.507711668296173     |
+| train_1/avg_q             | -13.893047570263027    |
+| train_1/current_q         | -2.0101616641314926    |
+| train_1/fw_bonus          | -0.9984323501586914    |
+| train_1/fw_loss           | 0.0009436391439521686  |
+| train_1/mu_grads          | 0.013383085606619716   |
+| train_1/mu_grads_std      | 0.1480717696249485     |
+| train_1/mu_loss           | 1.0000004326122582     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -4.007324200817209e-07 |
+| train_1/q_grads           | -0.005467838619370014  |
+| train_1/q_grads_std       | 0.3416400529444218     |
+| train_1/q_loss            | 0.035860174451258664   |
+| train_1/reward            | -2.0084446920562185    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0024658203125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -2.008444966287315     |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 8
+Time for epoch 8: 713.89. Rollout time: 490.31, Training time: 223.52
+Evaluating epoch 8
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 8                       |
+| policy/steps              | 797042.0                |
+| test/episodes             | 225.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -13.99412198879741      |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 900.0                   |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -9.411540459195342      |
+| train_0/fw_bonus          | -0.9999009028077126     |
+| train_0/fw_loss           | 3.2933830425463384e-05  |
+| train_0/mu_grads          | -0.004712136974558234   |
+| train_0/mu_grads_std      | 0.2333729788661003      |
+| train_0/mu_loss           | 9.386775174812934       |
+| train_0/next_q            | -9.383816629715426      |
+| train_0/q_grads           | 0.029172940365970134    |
+| train_0/q_grads_std       | 0.24031485691666604     |
+| train_0/q_loss            | 0.15762680367690834     |
+| train_0/reward            | -0.7103508413092641     |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.1156494140625         |
+| train_0/target_q          | -9.56350191188408       |
+| train_1/avg_q             | -13.936801495289837     |
+| train_1/current_q         | -2.009603757008801      |
+| train_1/fw_bonus          | -0.9989805355668068     |
+| train_1/fw_loss           | 0.0008132302275043913   |
+| train_1/mu_grads          | 0.013819920760579408    |
+| train_1/mu_grads_std      | 0.1482612866908312      |
+| train_1/mu_loss           | 1.0000123919835757      |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -1.1844425606573913e-05 |
+| train_1/q_grads           | -0.006975686165969819   |
+| train_1/q_grads_std       | 0.34511170238256456     |
+| train_1/q_loss            | 0.024072139488182896    |
+| train_1/reward            | -2.008584503388556      |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.0025146484375         |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -2.0085886266845314     |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 9
+Time for epoch 9: 22144.16. Rollout time: 21656.48, Training time: 487.58
+Evaluating epoch 9
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 9                      |
+| policy/steps              | 888167.0               |
+| test/episodes             | 250.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.941659601966967    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 1000.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.141183395723498    |
+| train_0/fw_bonus          | -0.9999148488044739    |
+| train_0/fw_loss           | 2.9132386225683148e-05 |
+| train_0/mu_grads          | -0.004889328498393297  |
+| train_0/mu_grads_std      | 0.2334316074848175     |
+| train_0/mu_loss           | 10.985996515539378     |
+| train_0/next_q            | -10.948417865560941    |
+| train_0/q_grads           | 0.029356598015874626   |
+| train_0/q_grads_std       | 0.25264707803726194    |
+| train_0/q_loss            | 1.663647180192649      |
+| train_0/reward            | -0.7109437508377596    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.13125                |
+| train_0/target_q          | -10.254999371024743    |
+| train_1/avg_q             | -14.017316519671912    |
+| train_1/current_q         | -1.9918587401509107    |
+| train_1/fw_bonus          | -0.9991993814706802    |
+| train_1/fw_loss           | 0.0007611659602844156  |
+| train_1/mu_grads          | 0.01669715838506818    |
+| train_1/mu_grads_std      | 0.1512873038649559     |
+| train_1/mu_loss           | 1.000001013167395      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -9.847359204428724e-07 |
+| train_1/q_grads           | -0.0075125266914255915 |
+| train_1/q_grads_std       | 0.34675944223999977    |
+| train_1/q_loss            | 0.021163200247497443   |
+| train_1/reward            | -1.9912744958004622    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.00205078125          |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -1.9912748933842803    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 10
+Time for epoch 10: 621.43. Rollout time: 410.36, Training time: 211.02
+Evaluating epoch 10
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 10                     |
+| policy/steps              | 979292.0               |
+| test/episodes             | 275.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.953606976226437    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 1100.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.314546983976623    |
+| train_0/fw_bonus          | -0.9999108105897904    |
+| train_0/fw_loss           | 3.023189642590296e-05  |
+| train_0/mu_grads          | -0.004914299119263887  |
+| train_0/mu_grads_std      | 0.23344150185585022    |
+| train_0/mu_loss           | 13.023304326268747     |
+| train_0/next_q            | -12.984786282430452    |
+| train_0/q_grads           | 0.02934008468873799    |
+| train_0/q_grads_std       | 0.26973473429679873    |
+| train_0/q_loss            | 3.252043690026519      |
+| train_0/reward            | -0.7106975936709204    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0978271484375        |
+| train_0/target_q          | -10.587106205393132    |
+| train_1/avg_q             | -13.988393878647056    |
+| train_1/current_q         | -1.9941792891763324    |
+| train_1/fw_bonus          | -0.9991754844784737    |
+| train_1/fw_loss           | 0.0007668503720196895  |
+| train_1/mu_grads          | 0.018273714184761047   |
+| train_1/mu_grads_std      | 0.15606364160776137    |
+| train_1/mu_loss           | 1.0000003389794876     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -3.388549113502558e-07 |
+| train_1/q_grads           | -0.009324659197591244  |
+| train_1/q_grads_std       | 0.35377962589263917    |
+| train_1/q_loss            | 0.017872688146549763   |
+| train_1/reward            | -1.9931424314410833    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.00224609375          |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -1.993142562716238     |
+------------------------------------------------------
+Saving periodic policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_10.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 11
+Time for epoch 11: 6963.77. Rollout time: 6166.50, Training time: 797.07
+Evaluating epoch 11
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 11                      |
+| policy/steps              | 1070417.0               |
+| test/episodes             | 300.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -14.00021366123752      |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 1200.0                  |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -10.216252798243929     |
+| train_0/fw_bonus          | -0.9999320670962334     |
+| train_0/fw_loss           | 2.443741368551855e-05   |
+| train_0/mu_grads          | -0.005767365917563438   |
+| train_0/mu_grads_std      | 0.23314708471298218     |
+| train_0/mu_loss           | 11.739224483296079      |
+| train_0/next_q            | -11.67795476078272      |
+| train_0/q_grads           | 0.029320396156981586    |
+| train_0/q_grads_std       | 0.2768150046467781      |
+| train_0/q_loss            | 1.8276043804378523      |
+| train_0/reward            | -0.708462127338862      |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.15625                 |
+| train_0/target_q          | -10.461278109557789     |
+| train_1/avg_q             | -13.938791577517245     |
+| train_1/current_q         | -1.9646816740595505     |
+| train_1/fw_bonus          | -0.9990334346890449     |
+| train_1/fw_loss           | 0.0008006441625184379   |
+| train_1/mu_grads          | 0.019692426733672618    |
+| train_1/mu_grads_std      | 0.16258704103529453     |
+| train_1/mu_loss           | 1.000001549551885       |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -1.5583259412146836e-06 |
+| train_1/q_grads           | -0.010564297181554138   |
+| train_1/q_grads_std       | 0.36133146435022356     |
+| train_1/q_loss            | 0.01322817566044201     |
+| train_1/reward            | -1.963530389409425      |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.0021240234375         |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -1.963530986465798      |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 12
+Time for epoch 12: 7486.78. Rollout time: 962.47, Training time: 6524.17
+Evaluating epoch 12
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 12                     |
+| policy/steps              | 1161542.0              |
+| test/episodes             | 325.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.020178162452023    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 1300.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.119464723750522    |
+| train_0/fw_bonus          | -0.9999255478382111    |
+| train_0/fw_loss           | 2.621622938931978e-05  |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.738912112849528     |
+| train_0/next_q            | -10.693931412609828    |
+| train_0/q_grads           | 0.02886906252242625    |
+| train_0/q_grads_std       | 0.28204372599720956    |
+| train_0/q_loss            | 1.1330961187526978     |
+| train_0/reward            | -0.7093133571041108    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.14716796875          |
+| train_0/target_q          | -10.354809687713278    |
+| train_1/avg_q             | -13.993122836484567    |
+| train_1/current_q         | -1.9858624330326689    |
+| train_1/fw_bonus          | -0.998895151913166     |
+| train_1/fw_loss           | 0.0008335395206813701  |
+| train_1/mu_grads          | 0.02092740931548178    |
+| train_1/mu_grads_std      | 0.16786442771553994    |
+| train_1/mu_loss           | 1.0000000390409434     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -4.113641501447247e-08 |
+| train_1/q_grads           | -0.012350976816378534  |
+| train_1/q_grads_std       | 0.36824026703834534    |
+| train_1/q_loss            | 0.011090219874330806   |
+| train_1/reward            | -1.9847258996429447    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.00205078125          |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -1.9847259124928065    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 13
+Time for epoch 13: 711.58. Rollout time: 475.15, Training time: 236.34
+Evaluating epoch 13
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-----------------------------------------------------
+| epoch                     | 13                    |
+| policy/steps              | 1252667.0             |
+| test/episodes             | 350.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -27.0                 |
+| test_1/avg_q              | -14.123457823200566   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 1400.0                |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -27.0                 |
+| train_0/current_q         | -10.189361837569956   |
+| train_0/fw_bonus          | -0.9999271556735039   |
+| train_0/fw_loss           | 2.577782292974007e-05 |
+| train_0/mu_grads          | -0.005767365917563438 |
+| train_0/mu_grads_std      | 0.23314708471298218   |
+| train_0/mu_loss           | 10.28698031367409     |
+| train_0/next_q            | -10.25306354569815    |
+| train_0/q_grads           | 0.02892442955635488   |
+| train_0/q_grads_std       | 0.28638939261436464   |
+| train_0/q_loss            | 0.7814585153383392    |
+| train_0/reward            | -0.7111208019166952   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.171484375           |
+| train_0/target_q          | -10.38426853025191    |
+| train_1/avg_q             | -14.003334003570602   |
+| train_1/current_q         | -1.9692906553450924   |
+| train_1/fw_bonus          | -0.9989139109849929   |
+| train_1/fw_loss           | 0.0008290792407933623 |
+| train_1/mu_grads          | 0.021232885401695968  |
+| train_1/mu_grads_std      | 0.16858919523656368   |
+| train_1/mu_loss           | 1.0000000025210685    |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -2.77795920953406e-09 |
+| train_1/q_grads           | -0.014269424881786109 |
+| train_1/q_grads_std       | 0.3747828558087349    |
+| train_1/q_loss            | 0.027200414957231904  |
+| train_1/reward            | -1.9683534380244965   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0027099609375       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -1.9683534388195725   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 14
+Time for epoch 14: 778.34. Rollout time: 530.93, Training time: 247.32
+Evaluating epoch 14
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 14                      |
+| policy/steps              | 1343792.0               |
+| test/episodes             | 375.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -14.005379451167666     |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 1500.0                  |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -9.96428093248943       |
+| train_0/fw_bonus          | -0.9999468997120857     |
+| train_0/fw_loss           | 2.039413284364855e-05   |
+| train_0/mu_grads          | -0.005767365917563438   |
+| train_0/mu_grads_std      | 0.23314708471298218     |
+| train_0/mu_loss           | 10.025688092420882      |
+| train_0/next_q            | -9.993809712102344      |
+| train_0/q_grads           | 0.028533047810196877    |
+| train_0/q_grads_std       | 0.2906075596809387      |
+| train_0/q_loss            | 0.6944153704911468      |
+| train_0/reward            | -0.7082498166520963     |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.2149658203125         |
+| train_0/target_q          | -10.231090061380888     |
+| train_1/avg_q             | -14.042155851076464     |
+| train_1/current_q         | -1.9593759396983763     |
+| train_1/fw_bonus          | -0.9992417365312576     |
+| train_1/fw_loss           | 0.0007510870535043068   |
+| train_1/mu_grads          | 0.02132538426667452     |
+| train_1/mu_grads_std      | 0.16880000084638597     |
+| train_1/mu_loss           | 1.0000000042188264      |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -4.3927653963279415e-09 |
+| train_1/q_grads           | -0.015280129876919091   |
+| train_1/q_grads_std       | 0.38259329944849013     |
+| train_1/q_loss            | 0.007806543907236024    |
+| train_1/reward            | -1.9591667728374886     |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.002099609375          |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -1.9591667742279193     |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 15
+Time for epoch 15: 814.90. Rollout time: 558.48, Training time: 256.36
+Evaluating epoch 15
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 15                     |
+| policy/steps              | 1434917.0              |
+| test/episodes             | 400.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.984195890644596    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 1600.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -9.698361303477407     |
+| train_0/fw_bonus          | -0.9999464109539986    |
+| train_0/fw_loss           | 2.052729664683284e-05  |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 9.753241716431074      |
+| train_0/next_q            | -9.736514104907094     |
+| train_0/q_grads           | 0.028482201183214782   |
+| train_0/q_grads_std       | 0.2935899429023266     |
+| train_0/q_loss            | 0.6595231113810665     |
+| train_0/reward            | -0.708847716809396     |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.2458984375           |
+| train_0/target_q          | -10.093273854522602    |
+| train_1/avg_q             | -14.010146299128227    |
+| train_1/current_q         | -2.008015341475071     |
+| train_1/fw_bonus          | -0.9993753209710121    |
+| train_1/fw_loss           | 0.0007193113124230877  |
+| train_1/mu_grads          | 0.021836569625884296   |
+| train_1/mu_grads_std      | 0.1697868976742029     |
+| train_1/mu_loss           | 1.0000000046231408     |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -4.753086332424468e-09 |
+| train_1/q_grads           | -0.015467709279619157  |
+| train_1/q_grads_std       | 0.3850919879972935     |
+| train_1/q_loss            | 0.006438616109354034   |
+| train_1/reward            | -2.007695471969055     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0021240234375        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -2.0076954738124657    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 16
+Time for epoch 16: 990.15. Rollout time: 688.05, Training time: 301.98
+Evaluating epoch 16
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 16                      |
+| policy/steps              | 1526042.0               |
+| test/episodes             | 425.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -13.98649720648061      |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 1700.0                  |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -9.691050270422577      |
+| train_0/fw_bonus          | -0.999961319565773      |
+| train_0/fw_loss           | 1.6465219960082323e-05  |
+| train_0/mu_grads          | -0.005767365917563438   |
+| train_0/mu_grads_std      | 0.23314708471298218     |
+| train_0/mu_loss           | 9.731906241006197       |
+| train_0/next_q            | -9.722304769018418      |
+| train_0/q_grads           | 0.028318990068510175    |
+| train_0/q_grads_std       | 0.296313414722681       |
+| train_0/q_loss            | 0.6073257913498082      |
+| train_0/reward            | -0.7084279211143439     |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.294970703125          |
+| train_0/target_q          | -10.107638151209898     |
+| train_1/avg_q             | -13.985244277970226     |
+| train_1/current_q         | -1.9884721085894128     |
+| train_1/fw_bonus          | -0.9997376918792724     |
+| train_1/fw_loss           | 0.0006331054159090854   |
+| train_1/mu_grads          | 0.025122362468391658    |
+| train_1/mu_grads_std      | 0.1761389896273613      |
+| train_1/mu_loss           | 1.0000000193408456      |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -1.8690779944727452e-08 |
+| train_1/q_grads           | -0.01619223356246948    |
+| train_1/q_grads_std       | 0.3886585973203182      |
+| train_1/q_loss            | 0.006873488476972707    |
+| train_1/reward            | -1.988760445164371      |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.0021240234375         |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -1.9887604521275855     |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 17
+Time for epoch 17: 866.21. Rollout time: 607.40, Training time: 258.70
+Evaluating epoch 17
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 17                     |
+| policy/steps              | 1617167.0              |
+| test/episodes             | 450.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.041020474297644    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 1800.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.070294711715167    |
+| train_0/fw_bonus          | -0.9999562233686448    |
+| train_0/fw_loss           | 1.785188883332012e-05  |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.112723842953198     |
+| train_0/next_q            | -10.089955402212786    |
+| train_0/q_grads           | 0.027440815651789307   |
+| train_0/q_grads_std       | 0.30071321651339533    |
+| train_0/q_loss            | 0.6290345684048052     |
+| train_0/reward            | -0.7087305537570501    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.2544921875           |
+| train_0/target_q          | -10.21294036646503     |
+| train_1/avg_q             | -13.989980377309791    |
+| train_1/current_q         | -1.995063651794417     |
+| train_1/fw_bonus          | -0.9998926550149918    |
+| train_1/fw_loss           | 0.0005962369730696082  |
+| train_1/mu_grads          | 0.02814299720339477    |
+| train_1/mu_grads_std      | 0.18196658007800579    |
+| train_1/mu_loss           | 1.000000003898117      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -3.770789385829037e-09 |
+| train_1/q_grads           | -0.016305591352283953  |
+| train_1/q_grads_std       | 0.38880808651447296    |
+| train_1/q_loss            | 0.006645571450982138   |
+| train_1/reward            | -1.9955395931581734    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0022705078125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -1.9955395947040881    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 18
+Time for epoch 18: 1376.91. Rollout time: 1005.18, Training time: 371.57
+Evaluating epoch 18
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-------------------------------------------------------
+| epoch                     | 18                      |
+| policy/steps              | 1708292.0               |
+| test/episodes             | 475.0                   |
+| test/success_rate         | 0.0                     |
+| test_0/avg_q              | -27.0                   |
+| test_1/avg_q              | -14.00618473810077      |
+| test_1/n_subgoals         | 675.0                   |
+| test_1/subgoal_succ_rate  | 0.0                     |
+| train/episodes            | 1900.0                  |
+| train/success_rate        | 0.0                     |
+| train_0/avg_q             | -27.0                   |
+| train_0/current_q         | -9.897377202141111      |
+| train_0/fw_bonus          | -0.999951682984829      |
+| train_0/fw_loss           | 1.908942290356208e-05   |
+| train_0/mu_grads          | -0.005767365917563438   |
+| train_0/mu_grads_std      | 0.23314708471298218     |
+| train_0/mu_loss           | 9.910356647647149       |
+| train_0/next_q            | -9.898111018249164      |
+| train_0/q_grads           | 0.02668379242531955     |
+| train_0/q_grads_std       | 0.30481856912374494     |
+| train_0/q_loss            | 0.6703171449873262      |
+| train_0/reward            | -0.7097780888107081     |
+| train_0/reward_-0.0_frac  | 0.0                     |
+| train_0/reward_-1.0_frac  | 0.2383056640625         |
+| train_0/target_q          | -10.059921506034124     |
+| train_1/avg_q             | -14.02349395958995      |
+| train_1/current_q         | -2.0047162946943438     |
+| train_1/fw_bonus          | -1.000140592455864      |
+| train_1/fw_loss           | 0.0005372556042857468   |
+| train_1/mu_grads          | 0.04146262556314469     |
+| train_1/mu_grads_std      | 0.20181188210844994     |
+| train_1/mu_loss           | 1.0000002844509628      |
+| train_1/n_subgoals        | 2700.0                  |
+| train_1/next_q            | -2.8212650980557115e-07 |
+| train_1/q_grads           | -0.017111425194889306   |
+| train_1/q_grads_std       | 0.3903004892170429      |
+| train_1/q_loss            | 0.006900816727509962    |
+| train_1/reward            | -2.004245101517154      |
+| train_1/reward_-0.0_frac  | 0.0                     |
+| train_1/reward_-1.0_frac  | 0.0016845703125         |
+| train_1/reward_-27.0_frac | 0.0                     |
+| train_1/subgoal_succ_rate | 0.0                     |
+| train_1/target_q          | -2.0042452171319587     |
+-------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 19
+Time for epoch 19: 1621.67. Rollout time: 1178.33, Training time: 443.18
+Evaluating epoch 19
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 19                     |
+| policy/steps              | 1799417.0              |
+| test/episodes             | 500.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.533983364385149    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2000.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.243692666227965    |
+| train_0/fw_bonus          | -0.9999563068151474    |
+| train_0/fw_loss           | 1.7830712181421404e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.27367344496615      |
+| train_0/next_q            | -10.256235804455978    |
+| train_0/q_grads           | 0.025412969337776304   |
+| train_0/q_grads_std       | 0.30882022231817247    |
+| train_0/q_loss            | 0.497638722924877      |
+| train_0/reward            | -0.7125758072150348    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.2584228515625        |
+| train_0/target_q          | -10.391599469428346    |
+| train_1/avg_q             | -13.986066833344951    |
+| train_1/current_q         | -15.726943845344682    |
+| train_1/fw_bonus          | -1.000278541445732     |
+| train_1/fw_loss           | 0.0005044379926403053  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.012387910042889416  |
+| train_1/q_grads_std       | 0.40559124276041986    |
+| train_1/q_loss            | 22.281743888227577     |
+| train_1/reward            | -2.025407826557057     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0024658203125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.905279896869564    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 20
+Time for epoch 20: 1306.45. Rollout time: 944.40, Training time: 361.89
+Evaluating epoch 20
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+-----------------------------------------------------
+| epoch                     | 20                    |
+| policy/steps              | 1890542.0             |
+| test/episodes             | 525.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -27.0                 |
+| test_1/avg_q              | -14.26437683109513    |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 2100.0                |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -27.0                 |
+| train_0/current_q         | -10.061552056560313   |
+| train_0/fw_bonus          | -0.9999515920877456   |
+| train_0/fw_loss           | 1.911583340188372e-05 |
+| train_0/mu_grads          | -0.005767365917563438 |
+| train_0/mu_grads_std      | 0.23314708471298218   |
+| train_0/mu_loss           | 10.078205173039104    |
+| train_0/next_q            | -10.059195548103023   |
+| train_0/q_grads           | 0.025047074491158127  |
+| train_0/q_grads_std       | 0.3119310803711414    |
+| train_0/q_loss            | 0.554107405103295     |
+| train_0/reward            | -0.7084230596883572   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.243994140625        |
+| train_0/target_q          | -10.21863644713088    |
+| train_1/avg_q             | -13.812280731476216   |
+| train_1/current_q         | -15.478248379430516   |
+| train_1/fw_bonus          | -1.000304003059864    |
+| train_1/fw_loss           | 0.0004983845217793714 |
+| train_1/mu_grads          | 0.0701320618391037    |
+| train_1/mu_grads_std      | 0.2506781220436096    |
+| train_1/mu_loss           | 28.0                  |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -27.0                 |
+| train_1/q_grads           | -0.011732110730372369 |
+| train_1/q_grads_std       | 0.4209752604365349    |
+| train_1/q_loss            | 19.578198120677037    |
+| train_1/reward            | -1.9676934974289906   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0017822265625       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -15.775214005241498   |
+-----------------------------------------------------
+Saving periodic policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_20.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 21
+Time for epoch 21: 3362.73. Rollout time: 2954.35, Training time: 408.17
+Evaluating epoch 21
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 21                     |
+| policy/steps              | 1981667.0              |
+| test/episodes             | 550.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.168859772551025    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2200.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.109174300500007    |
+| train_0/fw_bonus          | -0.9999574273824692    |
+| train_0/fw_loss           | 1.7525125008432953e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.13578857087858      |
+| train_0/next_q            | -10.121872433952497    |
+| train_0/q_grads           | 0.024605958350002767   |
+| train_0/q_grads_std       | 0.31495423465967176    |
+| train_0/q_loss            | 0.7476756811557566     |
+| train_0/reward            | -0.7100373052380746    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.287744140625         |
+| train_0/target_q          | -10.264276519786247    |
+| train_1/avg_q             | -14.070013458209809    |
+| train_1/current_q         | -15.542985872914603    |
+| train_1/fw_bonus          | -1.0002745926380157    |
+| train_1/fw_loss           | 0.0005053800086898264  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.010421975422650576  |
+| train_1/q_grads_std       | 0.43282229602336886    |
+| train_1/q_loss            | 15.350990477702535     |
+| train_1/reward            | -1.952847251734056     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0019287109375        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.795251548609064    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 22
+Time for epoch 22: 1328.48. Rollout time: 976.85, Training time: 351.40
+Evaluating epoch 22
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 22                     |
+| policy/steps              | 2072792.0              |
+| test/episodes             | 575.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.256611264335882    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2300.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.156624940509069    |
+| train_0/fw_bonus          | -0.9999594688415527    |
+| train_0/fw_loss           | 1.6967329656836228e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.168671768522293     |
+| train_0/next_q            | -10.154251570230869    |
+| train_0/q_grads           | 0.024933337001129985   |
+| train_0/q_grads_std       | 0.3183683447539806     |
+| train_0/q_loss            | 0.603604132370454      |
+| train_0/reward            | -0.7108684065213311    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.2525390625           |
+| train_0/target_q          | -10.315473301693293    |
+| train_1/avg_q             | -13.981676410780244    |
+| train_1/current_q         | -15.34882715684042     |
+| train_1/fw_bonus          | -1.0004822611808777    |
+| train_1/fw_loss           | 0.0004559753964713309  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.008288048510439693  |
+| train_1/q_grads_std       | 0.45361348539590834    |
+| train_1/q_loss            | 13.019788951538036     |
+| train_1/reward            | -1.985421792431589     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0014892578125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.645009194775344    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 23
+Time for epoch 23: 1371.03. Rollout time: 986.93, Training time: 384.00
+Evaluating epoch 23
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 23                     |
+| policy/steps              | 2163917.0              |
+| test/episodes             | 600.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.059135156014875    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2400.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.136374112085017    |
+| train_0/fw_bonus          | -0.9999694988131523    |
+| train_0/fw_loss           | 1.4235958110475621e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.161412478020694     |
+| train_0/next_q            | -10.145490130523388    |
+| train_0/q_grads           | 0.024865318182855846   |
+| train_0/q_grads_std       | 0.32085637375712395    |
+| train_0/q_loss            | 0.5032757810990012     |
+| train_0/reward            | -0.7094451932927768    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.3276611328125        |
+| train_0/target_q          | -10.285061512286749    |
+| train_1/avg_q             | -14.104409539649854    |
+| train_1/current_q         | -15.409574443560905    |
+| train_1/fw_bonus          | -1.0007709085941314    |
+| train_1/fw_loss           | 0.0003873059409670532  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.006765768711920828  |
+| train_1/q_grads_std       | 0.4709621623158455     |
+| train_1/q_loss            | 10.071031103561543     |
+| train_1/reward            | -1.9600778373271168    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0017578125           |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.701060747483373    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 24
+Time for epoch 24: 1385.33. Rollout time: 1033.93, Training time: 351.14
+Evaluating epoch 24
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 24                     |
+| policy/steps              | 2255042.0              |
+| test/episodes             | 625.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.30216363539377     |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2500.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.217572494063736    |
+| train_0/fw_bonus          | -0.9999656245112419    |
+| train_0/fw_loss           | 1.5290122348687873e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.243818121414431     |
+| train_0/next_q            | -10.232893447711549    |
+| train_0/q_grads           | 0.024929982703179122   |
+| train_0/q_grads_std       | 0.3226359233260155     |
+| train_0/q_loss            | 0.8010661925231043     |
+| train_0/reward            | -0.7119701151670597    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.332373046875         |
+| train_0/target_q          | -10.394631302602356    |
+| train_1/avg_q             | -13.927833659619056    |
+| train_1/current_q         | -15.200621073808048    |
+| train_1/fw_bonus          | -1.0006828635931015    |
+| train_1/fw_loss           | 0.00040825121614034287 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.00622541835764423   |
+| train_1/q_grads_std       | 0.4861772783100605     |
+| train_1/q_loss            | 8.544219069884953      |
+| train_1/reward            | -1.9533565693556738    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0018310546875        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.532840456074434    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 25
+Time for epoch 25: 1485.89. Rollout time: 1070.87, Training time: 414.91
+Evaluating epoch 25
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 25                     |
+| policy/steps              | 2346167.0              |
+| test/episodes             | 650.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.26964203293119     |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2600.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.103834837831155    |
+| train_0/fw_bonus          | -0.9999772891402244    |
+| train_0/fw_loss           | 1.2107125257898588e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.130174811732335     |
+| train_0/next_q            | -10.116217958501043    |
+| train_0/q_grads           | 0.024731168616563083   |
+| train_0/q_grads_std       | 0.3244967319071293     |
+| train_0/q_loss            | 0.7587958071047829     |
+| train_0/reward            | -0.7090706798480824    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.3615234375           |
+| train_0/target_q          | -10.268140390667764    |
+| train_1/avg_q             | -14.171508545100584    |
+| train_1/current_q         | -15.122466498027801    |
+| train_1/fw_bonus          | -1.0007728397846223    |
+| train_1/fw_loss           | 0.00038684667233610524 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.005882681906223297  |
+| train_1/q_grads_std       | 0.5030865341424942     |
+| train_1/q_loss            | 7.790953449448625      |
+| train_1/reward            | -1.9526569280300463    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001513671875         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.475293158498804    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 26
+Time for epoch 26: 1474.04. Rollout time: 1086.98, Training time: 386.90
+Evaluating epoch 26
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 26                     |
+| policy/steps              | 2437292.0              |
+| test/episodes             | 675.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.05845637813466     |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2700.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.106698679169995    |
+| train_0/fw_bonus          | -0.9999680504202842    |
+| train_0/fw_loss           | 1.4625842300119985e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.144676947622262     |
+| train_0/next_q            | -10.122980452596492    |
+| train_0/q_grads           | 0.024443580117076636   |
+| train_0/q_grads_std       | 0.32614904046058657    |
+| train_0/q_loss            | 0.6805942607670095     |
+| train_0/reward            | -0.7090904742733983    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.2894775390625        |
+| train_0/target_q          | -10.255243231910686    |
+| train_1/avg_q             | -14.085802717561515    |
+| train_1/current_q         | -15.135463077204971    |
+| train_1/fw_bonus          | -1.0010114043951035    |
+| train_1/fw_loss           | 0.0003300949356344063  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.005735816550441086  |
+| train_1/q_grads_std       | 0.5175387293100357     |
+| train_1/q_loss            | 6.371661135688617      |
+| train_1/reward            | -2.008550132135133     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0015869140625        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.500178550103891    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 27
+Time for epoch 27: 1594.61. Rollout time: 1150.05, Training time: 444.40
+Evaluating epoch 27
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 27                     |
+| policy/steps              | 2528417.0              |
+| test/episodes             | 700.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.35215387286163     |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2800.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.235470076726424    |
+| train_0/fw_bonus          | -0.999975611269474     |
+| train_0/fw_loss           | 1.2565752308546508e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.287922503953855     |
+| train_0/next_q            | -10.25657662841157     |
+| train_0/q_grads           | 0.024499580450356006   |
+| train_0/q_grads_std       | 0.32806983664631845    |
+| train_0/q_loss            | 0.6426413218782845     |
+| train_0/reward            | -0.710375991086039     |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.3528564453125        |
+| train_0/target_q          | -10.392736484531508    |
+| train_1/avg_q             | -14.044236249559168    |
+| train_1/current_q         | -15.235871690217271    |
+| train_1/fw_bonus          | -1.0009445816278457    |
+| train_1/fw_loss           | 0.00034598769852891567 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.005996855965349823  |
+| train_1/q_grads_std       | 0.5280236184597016     |
+| train_1/q_loss            | 6.349598286379768      |
+| train_1/reward            | -1.9948692678459339    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001611328125         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.61892688503344     |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 28
+Time for epoch 28: 1509.41. Rollout time: 1092.48, Training time: 416.73
+Evaluating epoch 28
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 28                     |
+| policy/steps              | 2619542.0              |
+| test/episodes             | 725.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.519711779997683    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 2900.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.010901919770234    |
+| train_0/fw_bonus          | -0.9999709919095039    |
+| train_0/fw_loss           | 1.3829251622610173e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.03325950919558      |
+| train_0/next_q            | -10.027772947270098    |
+| train_0/q_grads           | 0.024353318149223924   |
+| train_0/q_grads_std       | 0.3298818975687027     |
+| train_0/q_loss            | 0.724284507518762      |
+| train_0/reward            | -0.7088600019094884    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.322900390625         |
+| train_0/target_q          | -10.172483927411506    |
+| train_1/avg_q             | -14.178621886116192    |
+| train_1/current_q         | -15.1757296747549      |
+| train_1/fw_bonus          | -1.0008573353290557    |
+| train_1/fw_loss           | 0.0003667427823529579  |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.006591826921794564  |
+| train_1/q_grads_std       | 0.53606216609478       |
+| train_1/q_loss            | 5.33651606337219       |
+| train_1/reward            | -1.9894057242570853    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001513671875         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.55338570472584     |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 29
+Time for epoch 29: 2284.72. Rollout time: 1935.83, Training time: 348.68
+Evaluating epoch 29
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 29                     |
+| policy/steps              | 2710667.0              |
+| test/episodes             | 750.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.112516599119063    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 3000.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.185398203634719    |
+| train_0/fw_bonus          | -0.9999760881066322    |
+| train_0/fw_loss           | 1.2435312305569823e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.222426657977618     |
+| train_0/next_q            | -10.210434835768808    |
+| train_0/q_grads           | 0.024042130121961235   |
+| train_0/q_grads_std       | 0.3311709642410278     |
+| train_0/q_loss            | 0.694323139862407      |
+| train_0/reward            | -0.7114138279401232    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.33427734375          |
+| train_0/target_q          | -10.344696423531541    |
+| train_1/avg_q             | -13.749290438965645    |
+| train_1/current_q         | -15.225294963150551    |
+| train_1/fw_bonus          | -1.0008070915937424    |
+| train_1/fw_loss           | 0.00037869993466301823 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.006654120981693268  |
+| train_1/q_grads_std       | 0.5448462247848511     |
+| train_1/q_loss            | 7.964873960632744      |
+| train_1/reward            | -1.9471076442452613    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0012939453125        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.628658913776519    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 30
+Time for epoch 30: 1440.35. Rollout time: 1020.22, Training time: 419.96
+Evaluating epoch 30
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 30                     |
+| policy/steps              | 2801792.0              |
+| test/episodes             | 775.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.216436182704186    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 3100.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.157173980225098    |
+| train_0/fw_bonus          | -0.9999825105071067    |
+| train_0/fw_loss           | 1.0684240100999886e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.224436692179959     |
+| train_0/next_q            | -10.187846006780484    |
+| train_0/q_grads           | 0.023894787905737756   |
+| train_0/q_grads_std       | 0.3329197555780411     |
+| train_0/q_loss            | 0.5452205431359023     |
+| train_0/reward            | -0.7104648911619733    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.35419921875          |
+| train_0/target_q          | -10.321749638297387    |
+| train_1/avg_q             | -13.984424119523206    |
+| train_1/current_q         | -15.307650351035374    |
+| train_1/fw_bonus          | -1.0009427487850189    |
+| train_1/fw_loss           | 0.00034642890896066094 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.0070630313246510925 |
+| train_1/q_grads_std       | 0.5537995234131813     |
+| train_1/q_loss            | 6.071264237985721      |
+| train_1/reward            | -1.9782789851575218    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001513671875         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.701174004688777    |
+------------------------------------------------------
+Saving periodic policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_30.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 31
+Time for epoch 31: 1910.70. Rollout time: 1361.96, Training time: 548.38
+Evaluating epoch 31
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 31                     |
+| policy/steps              | 2892917.0              |
+| test/episodes             | 800.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -14.147323296202597    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 3200.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.120265298317156    |
+| train_0/fw_bonus          | -0.9999842464923858    |
+| train_0/fw_loss           | 1.0210962409473723e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.165908495896028     |
+| train_0/next_q            | -10.15901554308514     |
+| train_0/q_grads           | 0.02384084272198379    |
+| train_0/q_grads_std       | 0.3359796077013016     |
+| train_0/q_loss            | 0.803052712609284      |
+| train_0/reward            | -0.7106854855468555    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.3745361328125        |
+| train_0/target_q          | -10.292904365412095    |
+| train_1/avg_q             | -14.125681590270428    |
+| train_1/current_q         | -15.3010274112499      |
+| train_1/fw_bonus          | -1.0011102080345153    |
+| train_1/fw_loss           | 0.00030658623509225433 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.006827830418478698  |
+| train_1/q_grads_std       | 0.5632892474532127     |
+| train_1/q_loss            | 6.400574482266059      |
+| train_1/reward            | -1.9801693662186153    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001513671875         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.694020440437374    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 32
+Time for epoch 32: 2403.67. Rollout time: 1547.11, Training time: 855.83
+Evaluating epoch 32
+Data_dir: data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100
+------------------------------------------------------
+| epoch                     | 32                     |
+| policy/steps              | 2984042.0              |
+| test/episodes             | 825.0                  |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -27.0                  |
+| test_1/avg_q              | -13.919001514088805    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 3300.0                 |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -27.0                  |
+| train_0/current_q         | -10.216450563728761    |
+| train_0/fw_bonus          | -0.9999751687049866    |
+| train_0/fw_loss           | 1.2687408707279247e-05 |
+| train_0/mu_grads          | -0.005767365917563438  |
+| train_0/mu_grads_std      | 0.23314708471298218    |
+| train_0/mu_loss           | 10.270835332509792     |
+| train_0/next_q            | -10.252167654090025    |
+| train_0/q_grads           | 0.023607483552768826   |
+| train_0/q_grads_std       | 0.33880756348371505    |
+| train_0/q_loss            | 0.6650616352258354     |
+| train_0/reward            | -0.7101438343837799    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.36396484375          |
+| train_0/target_q          | -10.376264560581106    |
+| train_1/avg_q             | -14.035879149700449    |
+| train_1/current_q         | -15.445563117375462    |
+| train_1/fw_bonus          | -1.0010236620903015    |
+| train_1/fw_loss           | 0.00032717643771320584 |
+| train_1/mu_grads          | 0.0701320618391037     |
+| train_1/mu_grads_std      | 0.2506781220436096     |
+| train_1/mu_loss           | 28.0                   |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -27.0                  |
+| train_1/q_grads           | -0.006516226939857006  |
+| train_1/q_grads_std       | 0.5700264751911164     |
+| train_1/q_loss            | 5.635622626065639      |
+| train_1/reward            | -1.9606070471658312    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.001611328125         |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -15.845001090134588    |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/d4a6886/CausalDependenciesMujocoEnv-o1-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|100/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 33

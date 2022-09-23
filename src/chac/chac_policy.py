@@ -111,8 +111,9 @@ class CHACPolicy():
 
     def learn(self, num_updates):
         """Update actor and critic networks for each layer"""
+        counter = 0
         return [
-            self.layers[i].learn(num_updates) for i in range(len(self.layers))
+            self.layers[i].learn(num_updates, counter) for i in range(len(self.layers))
         ]
 
     def train(self, env, episode_num, eval_data, num_updates):
