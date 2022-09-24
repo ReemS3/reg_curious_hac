@@ -1,0 +1,35 @@
+{
+    "os": "Darwin-21.6.0-x86_64-i386-64bit",
+    "python": "3.7.13",
+    "heartbeatAt": "2022-09-23T11:01:13.922474",
+    "startedAt": "2022-09-23T11:01:13.276600",
+    "docker": null,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [
+        "--render",
+        "0",
+        "--env",
+        "AntFourRoomsEnv-v0",
+        "--n_epochs",
+        "100",
+        "--fw",
+        "1",
+        "--eta",
+        "0.5",
+        "--regularization",
+        "1"
+    ],
+    "state": "running",
+    "program": "experiment/train.py",
+    "codePath": "experiment/train.py",
+    "git": {
+        "remote": "https://github.com/Niklas-KOI/DRL22.git",
+        "commit": "eef7a7786b8c0b93e0bf994d206ea6c011cc5bbd"
+    },
+    "email": "reemfarah96@gmail.com",
+    "root": "/Users/farah/Desktop/uni/DRL22",
+    "host": "NB324.fritz.box",
+    "username": "farah",
+    "executable": "/usr/local/anaconda3/envs/DRL22_new/bin/python3.7"
+}

@@ -11,6 +11,8 @@ import copy
 
 
 class Layer:
+    """The hierarchical level where actor, critic, forward model for  curiosity
+    and the representer work together to generate proper goal or actions"""
     def __init__(self, level, env, agent_params):
         self.level = level
         self.n_levels = agent_params["n_levels"]
@@ -66,7 +68,6 @@ class Layer:
         if self.level == self.n_levels - 1:
             # Goals of highest layer are real goals of environment
             goal_dim = env.end_goal_dim
-
         self.replay_buffer = ExperienceBuffer(
             self.buffer_size,
             agent_params["batch_size"],
@@ -131,18 +132,16 @@ class Layer:
         self.steps_taken = 0
         self.total_steps = 0
         self.abs_range = 20
+        if self.reg:
+            self.representer = RepresentationNetwork(
+                env, 2, self.abs_range, env.subgoal_dim
+            )
+            self.representer_old = copy.deepcopy(self.representer)
 
-        self.representer = RepresentationNetwork(
-            env, 2, self.abs_range, env.subgoal_dim
-        )
-        self.representer_old = copy.deepcopy(self.representer)
-
-    def sample_prioritized_data(self, states_array):
-        """TODO: add documentations"""
+    def sample_prioritized_data(self, states_array, losses_array):
+        """Sample prioritized data with the lowest loss"""
         episode_num = self.replay_buffer.size
-
-        p = states_array[: self.time_limit + 1, :]
-        p_argsorted = np.argsort(p.reshape(-1))
+        p_argsorted = np.argsort(losses_array.reshape(-1))
 
         high_p = p_argsorted[-int(len(p_argsorted) * self.high_ratio):]
         low_p = p_argsorted[int(len(p_argsorted) * self.low_ratio):]
@@ -173,9 +172,9 @@ class Layer:
         )
         return train_data, selected_idx, reg_states
 
-    # Add noise to provided action
+
     def add_noise(self, action, env):
-        # Noise added will be percentage of range
+        """Add noise to provided action. Noise added will be percentage of range"""
         action_bounds = (
             env.action_bounds
             if self.level == 0
@@ -703,9 +702,11 @@ class Layer:
 
 
             if self.reg and self.level > 0:
-                states_array = old_states.numpy()
+                losses = -self.critic(
+                    old_states, goals, self.representer(old_states)
+                ).mean()
                 train_data, __, reg_states = self.sample_prioritized_data(
-                    states_array
+                    old_states.numpy(),losses.detach().numpy()
                 )
                 reg_states_tensor = torch.tensor(
                     reg_states, dtype=torch.float32
@@ -742,15 +743,6 @@ class Layer:
 
                 ini_representation_loss = (min_dist + max_dist).mean()
 
-                # if counter > self.phi_interval:
-                #     representation_loss = (
-                #         stable_loss * self.stable_coeff
-                #         + ini_representation_loss 
-                #     )
-                #     counter = 0
-                # else:
-                #     representation_loss = ini_representation_loss 
-                #     counter += 1
                 q_update = self.critic.update(
                     old_states,
                     actions,
@@ -779,16 +771,23 @@ class Layer:
                 mu_loss = -self.critic(
                     old_states, goals, self.representer(old_states)
                 ).mean()
+                mu_loss_actor = -self.critic(
+                    old_states, goals, self.actor(old_states, goals)
+                ).mean()
                 if counter > self.phi_interval:
                     representation_loss = (
                         stable_loss * self.stable_coeff
-                        + mu_loss 
+                        + ini_representation_loss 
                     )
                     counter = 0
                 else:
-                    representation_loss = mu_loss 
+                    representation_loss = ini_representation_loss 
                     counter += 1
-                mu_update = self.representer.update(representation_loss)
+                self.representer_old = copy.deepcopy(self.representer)
+                mu_update = self.representer.update(representation_loss+mu_loss)
+                # to make sure that the actor is learning when not being in the
+                # lowest hierarchical level 
+                mu_update = self.actor.update(mu_loss_actor)
             else:
                 mu_loss = -self.critic(
                     old_states, goals, self.actor(old_states, goals)

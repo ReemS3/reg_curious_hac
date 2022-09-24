@@ -16,7 +16,13 @@ This code works with Python3.7 on MacOS
 - Install the requirements: `conda install --yes --file requirements.txt`
 - We couldn't download all the required libraries using conda, thus we used pip as follows:
     - `conda install -c conda-forge mpi4py mpich`
-    - `conda install matplotlib==3.0.1`
+    - `pip install matplotlib==3.0.1`
+- Change in util.py and train.py where For macOS is written.
+
+
+### Getting started (on Ubuntu):
+- Create a virtual environment using Python3.7: `python3.7 -m venv ~/venv/RCHAC`
+- Run `pip3 install -r requirements_gpu.txt` if you have GPU, otherwise `pip3 install -r requirements.txt`
 
 ### To download the data:
 - If you're using macOS, ignore the next two bullet points. Otherwise, delete `data/mujoco200`and follow the following instructions.
@@ -24,7 +30,13 @@ This code works with Python3.7 on MacOS
 - Even though Roboti LLC provides an unlocked version of MuJoCo but we still need to download the activation key `mjkey.txt` from [here](http://www.roboti.us/license.html) and move it inside `mujoco200/bin`.
 
 ### Command line options
-To run the `experminent/train.py`:
+- To run the `experminent/train.py`: 
+  `python3.7 experiment/train.py--env AntFourRoomsEnv-v0 --n_epochs 100 --fw 1 --eta 0.5 --regularization 1`
+  - `--fw 1` indicates if curiosity-based rewards should be used.
+  - `--eta 0.75` indicates the balance between using intrinsic rewards and external rewards.
+  - `--regularization 1` indicates using regularization of the subgoal learning.
+- To run a trained policy or to continue its training:
+    `python3.7 experiment/train.py--env AntFourRoomsEnv-v0 --restore_policy path-to-the-policy --n_epochs 100 --fw 1 --eta 0.5 --regularization 1`
 
 ### Visualization tool: 
 To see the visualization of the different runs of this [project](https://wandb.ai/rfarah/RCHAC?workspace=user-rfarah) on W&B.

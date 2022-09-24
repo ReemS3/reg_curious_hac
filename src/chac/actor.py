@@ -7,25 +7,30 @@ from src.chac.utils import Base, hidden_init
 
 class Actor(Base):
     """The actor network with MLPs consisting of 3 hidden layers of size 256"""
+
     def __init__(self, env, level, n_levels):
         super(Actor, self).__init__()
-        
+
         # We keep the parameters because the authors recommended using them
-        hidden_size=64
+        hidden_size = 64
         lr = 0.001
-        self.actor_name = 'actor_' + str(level)
+        self.actor_name = "actor_" + str(level)
 
         # Determine range of actor network outputs.
-        self.action_space_bounds = torch.FloatTensor(env.action_bounds
-                if level == 0 else env.subgoal_bounds_symmetric)
-        self.action_offset = torch.FloatTensor(env.action_offset
-                if level == 0 else env.subgoal_bounds_offset)
+        self.action_space_bounds = torch.FloatTensor(
+            env.action_bounds if level == 0 else env.subgoal_bounds_symmetric
+        )
+        self.action_offset = torch.FloatTensor(
+            env.action_offset if level == 0 else env.subgoal_bounds_offset
+        )
 
         # Dimensions of action will depend on layer level
         action_space_size = env.action_dim if level == 0 else env.subgoal_dim
 
         # Dimensions of goal placeholder will differ depending on layer level
-        goal_dim = env.end_goal_dim if level == n_levels - 1 else env.subgoal_dim
+        goal_dim = (
+            env.end_goal_dim if level == n_levels - 1 else env.subgoal_dim
+        )
 
         # Network layers
         self.fc1 = nn.Linear(env.state_dim + goal_dim, hidden_size)
@@ -53,15 +58,20 @@ class Actor(Base):
         h1 = F.relu(self.fc1(x))
         h2 = F.relu(self.fc2(h1))
         h3 = F.relu(self.fc3(h2))
-        return torch.tanh(self.fc4(h3)) * self.action_space_bounds + self.action_offset
+        return (
+            torch.tanh(self.fc4(h3)) * self.action_space_bounds
+            + self.action_offset
+        )
 
     def update(self, mu_loss):
         self.actor_optimizer.zero_grad()
         mu_loss.backward()
-        flat_grads = torch.cat([param.flatten() for __, param in self.named_parameters()])
+        flat_grads = torch.cat(
+            [param.flatten() for __, param in self.named_parameters()]
+        )
         self.actor_optimizer.step()
         return {
-            'mu_loss': mu_loss.item(),
-            'mu_grads': flat_grads.mean().item(),
-            'mu_grads_std': flat_grads.std().item(),
+            "mu_loss": mu_loss.item(),
+            "mu_grads": flat_grads.mean().item(),
+            "mu_grads_std": flat_grads.std().item(),
         }

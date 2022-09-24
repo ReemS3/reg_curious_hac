@@ -1,0 +1,260 @@
+Starting process id: 63898
+T: 700
+alg: chac
+algorithm: src.chac
+atomic_noise: 0.2
+base_logdir: data
+batch_size: 1024
+bind_core: 0
+buffer_size: 500
+chac_params: {}
+early_stop_data_column: test/success_rate
+early_stop_threshold: 100.0
+env_name: AntFourRoomsEnv-v0
+eta: 0.5
+fw: 1
+fw_hidden_size: 256,256,256
+fw_lr: 0.001
+gamma: 0.9985714285714286
+graph: 1
+info: 
+make_env: <function prepare_params.<locals>.make_env at 0x7fbc79248c20>
+max_try_idx: 199
+mu_hidden_size: 64
+mu_lr: 0.001
+n_episodes: 100
+n_levels: 2
+n_pre_episodes: 30
+n_test_rollouts: 25
+n_train_batches: 40
+n_train_rollouts: 100
+num_threads: 1
+q_hidden_size: 64
+q_lr: 0.001
+random_action_perc: 0.3
+regularization: True
+render: 0
+rollout_batch_size: 1
+subgoal_noise: 0.2
+subgoal_test_perc: 0.3
+time_scales: 27,27
+try_start_idx: 100
+use_mpi: False
+verbose: False
+
+*** Warning ***
+You are running src.chac with just a single MPI worker. This will work, but the HER experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+dims: action = 8, subgoal = 5, end_goal = 3
+subgoal_bounds: symmetric [8.  8.  0.5 3.  3. ], offset [0.  0.  0.5 0.  0. ]
+Running on CPU ...
+Creating a CHAC agent
+
+Hierarchy Level 0 with time scale 27
+Actor(
+  (fc1): Linear(in_features=34, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=8, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=42, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=37, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=29, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+
+Hierarchy Level 1 with time scale 27
+Actor(
+  (fc1): Linear(in_features=32, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=5, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=34, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=29, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+Training epoch 0
+Time for epoch 0: 526.85. Rollout time: 273.35, Training time: 253.48
+Evaluating epoch 0
+Data_dir: data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102
+------------------------------------------------------
+| epoch                     | 0                      |
+| policy/steps              | 91125.0                |
+| test/episodes             | 25.0                   |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -22.697799691818485    |
+| test_1/avg_q              | -12.823561854401063    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 100.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -8.214369280182744     |
+| train_0/current_q         | -8.085178257812942     |
+| train_0/fw_bonus          | -0.9944851264357567    |
+| train_0/fw_loss           | 0.02881713374517858    |
+| train_0/mu_grads          | -0.0021955860953312366 |
+| train_0/mu_grads_std      | 0.16097945161163807    |
+| train_0/mu_loss           | 7.9660656138543136     |
+| train_0/next_q            | -7.962326832675194     |
+| train_0/q_grads           | 0.009926886577159167   |
+| train_0/q_grads_std       | 0.12006474379450083    |
+| train_0/q_loss            | 0.2487365826714371     |
+| train_0/reward            | -0.7219862167585234    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.0002197265625        |
+| train_0/target_q          | -8.201347847955187     |
+| train_1/avg_q             | -7.671382185511444     |
+| train_1/current_q         | -9.0015029085679       |
+| train_1/fw_bonus          | -0.990342715382576     |
+| train_1/fw_loss           | 0.057880457304418084   |
+| train_1/mu_grads          | -0.028420568397268652  |
+| train_1/mu_grads_std      | 0.15565831810235978    |
+| train_1/mu_loss           | 6.655145201340827      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -8.857239869276391     |
+| train_1/q_grads           | 0.01236226772889495    |
+| train_1/q_grads_std       | 0.10882731471210719    |
+| train_1/q_loss            | 2.8499418429036902     |
+| train_1/reward            | -2.0950126635558264    |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0031494140625        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -8.986977676580638     |
+------------------------------------------------------
+Saving periodic policy to data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102/policy_0.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102/policy_best.pkl ...
+Training epoch 1
+Time for epoch 1: 470.16. Rollout time: 259.98, Training time: 210.12
+Evaluating epoch 1
+Data_dir: data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102
+------------------------------------------------------
+| epoch                     | 1                      |
+| policy/steps              | 182250.0               |
+| test/episodes             | 50.0                   |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -26.99535755691602     |
+| test_1/avg_q              | -12.826395048371426    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 200.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -25.555003134821405    |
+| train_0/current_q         | -9.00505190251353      |
+| train_0/fw_bonus          | -0.9970506191253662    |
+| train_0/fw_loss           | 0.015595134510658682   |
+| train_0/mu_grads          | -0.013981966231949628  |
+| train_0/mu_grads_std      | 0.20085420347750188    |
+| train_0/mu_loss           | 8.943668966899057      |
+| train_0/next_q            | -8.948486752042273     |
+| train_0/q_grads           | 0.00716744587989524    |
+| train_0/q_grads_std       | 0.1322385475039482     |
+| train_0/q_loss            | 0.2241894423499904     |
+| train_0/reward            | -0.7178734534754767    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.000634765625         |
+| train_0/target_q          | -9.176643064177057     |
+| train_1/avg_q             | -13.396571000181968    |
+| train_1/current_q         | -8.820884071636495     |
+| train_1/fw_bonus          | -0.9870086118578911    |
+| train_1/fw_loss           | 0.07221720591187478    |
+| train_1/mu_grads          | -0.03712081611156463   |
+| train_1/mu_grads_std      | 0.187584063783288      |
+| train_1/mu_loss           | 6.111265721622543      |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -8.56636351845972      |
+| train_1/q_grads           | -0.0015795416198670863 |
+| train_1/q_grads_std       | 0.12826640009880066    |
+| train_1/q_loss            | 1.7508840901592269     |
+| train_1/reward            | -2.071775793859706     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0015625              |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.0                    |
+| train_1/target_q          | -8.77486758734712      |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102/policy_best.pkl ...
+Training epoch 2
+Time for epoch 2: 471.63. Rollout time: 258.63, Training time: 212.96
+Evaluating epoch 2
+Data_dir: data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102
+------------------------------------------------------
+| epoch                     | 2                      |
+| policy/steps              | 273358.0               |
+| test/episodes             | 75.0                   |
+| test/success_rate         | 0.0                    |
+| test_0/avg_q              | -26.991315102028366    |
+| test_1/avg_q              | -13.746233855466155    |
+| test_1/n_subgoals         | 675.0                  |
+| test_1/subgoal_succ_rate  | 0.0                    |
+| train/episodes            | 300.0                  |
+| train/success_rate        | 0.0                    |
+| train_0/avg_q             | -24.671430341102926    |
+| train_0/current_q         | -9.211485633147598     |
+| train_0/fw_bonus          | -0.9978712126612663    |
+| train_0/fw_loss           | 0.011365982424467801   |
+| train_0/mu_grads          | -0.018229628261178733  |
+| train_0/mu_grads_std      | 0.23096587285399436    |
+| train_0/mu_loss           | 9.151896343977588      |
+| train_0/next_q            | -9.151860615417613     |
+| train_0/q_grads           | -4.027603022223047e-05 |
+| train_0/q_grads_std       | 0.14639650844037533    |
+| train_0/q_loss            | 0.21093983412604583    |
+| train_0/reward            | -0.7135840417999134    |
+| train_0/reward_-0.0_frac  | 0.0                    |
+| train_0/reward_-1.0_frac  | 0.00537109375          |
+| train_0/target_q          | -9.343388718534953     |
+| train_1/avg_q             | -13.72542491593417     |
+| train_1/current_q         | -7.8451159438754505    |
+| train_1/fw_bonus          | -0.9849799633026123    |
+| train_1/fw_loss           | 0.08094054330140352    |
+| train_1/mu_grads          | -0.043815546203404665  |
+| train_1/mu_grads_std      | 0.20179007649421693    |
+| train_1/mu_loss           | 5.86271977640917       |
+| train_1/n_subgoals        | 2700.0                 |
+| train_1/next_q            | -7.420187448002764     |
+| train_1/q_grads           | -0.017620669305324556  |
+| train_1/q_grads_std       | 0.14526922591030597    |
+| train_1/q_loss            | 0.7507018721780085     |
+| train_1/reward            | -2.086093493687804     |
+| train_1/reward_-0.0_frac  | 0.0                    |
+| train_1/reward_-1.0_frac  | 0.0013427734375        |
+| train_1/reward_-27.0_frac | 0.0                    |
+| train_1/subgoal_succ_rate | 0.00037037037037037035 |
+| train_1/target_q          | -7.825994703861906     |
+------------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntFourRoomsEnv-v0/alg:chac|eta:0.5|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|102/policy_best.pkl ...
+Training epoch 3

@@ -4,6 +4,7 @@ atomicwrites==1.2.1
 attrs==18.2.0
 blend-modes==1.0.1
 certifi==2018.10.15
+multiprocessing==0.70.13
 cffi==1.11.5
 chardet==3.0.4
 Click==7.0

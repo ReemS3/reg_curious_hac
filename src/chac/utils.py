@@ -31,6 +31,7 @@ class Base(nn.Module):
 
 
 def hidden_init(layer):
+    """Initialize the weights of the given layer"""
     fan_in = layer.weight.data.size(-1)
     lim = 1.0 / np.sqrt(fan_in)
     return (-lim, lim)
@@ -38,6 +39,8 @@ def hidden_init(layer):
 
 def mlp(sizes, activation, output_activation=nn.Identity):
     layers = []
+    """Create an MLP with the given size and the activation function to the 
+    higher levels policies """
     for j in range(len(sizes) - 1):
         act = activation if j < len(sizes) - 2 else output_activation
         layers += [nn.Linear(sizes[j], sizes[j + 1]), act()]

@@ -3,7 +3,7 @@ from torch import nn
 from src.chac.utils import Base
 
 class RepresentationNetwork(Base):
-    """TODO: add the documentation here"""
+    """This model is for learning goal representation """
     def __init__(self, env, layer, abs_range, out_dim):
         super(RepresentationNetwork, self).__init__()
         self.obs_dim = env.state_dim
@@ -21,9 +21,7 @@ class RepresentationNetwork(Base):
             obs_models = [nn.Linear(self.obs_dim, self.out_dim)]
         else:
             obs_models = [nn.Linear(self.obs_dim, self.mid_dim)]
-        # if layer > 2:
-        #     for __ in range(layer - 2):
-        #         obs_models += [nn.ReLU(), nn.Linear(self.mid_dim, self.mid_dim)]
+
         if layer > 1:
             obs_models += [nn.ReLU(), nn.Linear(self.mid_dim, self.out_dim)]
         
@@ -35,9 +33,7 @@ class RepresentationNetwork(Base):
         if len(obs.shape) == 1:
             obs = obs.unsqueeze(0)
         s = self.obs_encoder(obs)
-        # this should not be implemented according to our project
-        # return torch.tanh(s) * self.action_space_bounds + self.action_offset
-        return s + self.action_offset
+        return torch.tanh(s) * self.action_space_bounds + self.action_offset
 
     def update(self, mu_loss):
         self.representation_optim.zero_grad()

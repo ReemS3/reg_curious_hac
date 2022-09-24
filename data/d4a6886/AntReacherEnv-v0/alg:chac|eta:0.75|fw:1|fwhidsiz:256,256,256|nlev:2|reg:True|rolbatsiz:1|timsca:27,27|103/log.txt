@@ -1,0 +1,819 @@
+Starting process id: 37750
+T: 700
+alg: chac
+algorithm: src.chac
+atomic_noise: 0.2
+base_logdir: data
+batch_size: 1024
+bind_core: 0
+buffer_size: 500
+chac_params: {}
+early_stop_data_column: test/success_rate
+early_stop_threshold: 100.0
+env_name: AntReacherEnv-v0
+eta: 0.75
+fw: 1
+fw_hidden_size: 256,256,256
+fw_lr: 0.001
+gamma: 0.9985714285714286
+graph: 1
+info: 
+make_env: <function prepare_params.<locals>.make_env at 0x7f7f59406d40>
+max_try_idx: 199
+mu_hidden_size: 64
+mu_lr: 0.001
+n_episodes: 100
+n_levels: 2
+n_pre_episodes: 30
+n_test_rollouts: 25
+n_train_batches: 40
+n_train_rollouts: 100
+num_threads: 1
+q_hidden_size: 64
+q_lr: 0.001
+random_action_perc: 0.3
+regularization: True
+render: 0
+rollout_batch_size: 1
+subgoal_noise: 0.2
+subgoal_test_perc: 0.3
+time_scales: 27,27
+try_start_idx: 100
+use_mpi: False
+verbose: False
+
+*** Warning ***
+You are running src.chac with just a single MPI worker. This will work, but the HER experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+dims: action = 8, subgoal = 5, end_goal = 3
+subgoal_bounds: symmetric [11.75 11.75  0.5   3.    3.  ], offset [0.  0.  0.5 0.  0. ]
+Running on CPU ...
+Creating a CHAC agent
+
+Hierarchy Level 0 with time scale 27
+Actor(
+  (fc1): Linear(in_features=34, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=8, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=42, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=37, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=29, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+
+Hierarchy Level 1 with time scale 27
+Actor(
+  (fc1): Linear(in_features=32, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=5, bias=True)
+)
+Critic(
+  (fc1): Linear(in_features=37, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=64, bias=True)
+  (fc4): Linear(in_features=64, out_features=1, bias=True)
+  (mse_loss): MSELoss()
+)
+ForwardModel(
+  (mlp): Sequential(
+    (0): Linear(in_features=34, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=256, bias=True)
+    (5): ReLU()
+    (6): Linear(in_features=256, out_features=29, bias=True)
+    (7): Identity()
+  )
+  (mse_loss): MSELoss()
+)
+Training epoch 0
+Time for epoch 0: 799.75. Rollout time: 418.98, Training time: 380.68
+Evaluating epoch 0
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 0                     |
+| policy/steps              | 90225.0               |
+| test/episodes             | 25.0                  |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -0.3311466009328934   |
+| test_1/avg_q              | -17.227497850809605   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 100.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -4.273087883796797    |
+| train_0/current_q         | -5.626180854549444    |
+| train_0/fw_bonus          | -0.9961468905210495   |
+| train_0/fw_loss           | 0.03312217276543379   |
+| train_0/mu_grads          | -0.014036682387813925 |
+| train_0/mu_grads_std      | 0.15451740249991416   |
+| train_0/mu_loss           | 5.633880008840199     |
+| train_0/next_q            | -5.591626794944354    |
+| train_0/q_grads           | 0.0031807819730602207 |
+| train_0/q_grads_std       | 0.12346043307334184   |
+| train_0/q_loss            | 1.2483400335715498    |
+| train_0/reward            | -0.6353709484894352   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0008056640625       |
+| train_0/target_q          | -5.723445365517678    |
+| train_1/avg_q             | -11.888970009381833   |
+| train_1/current_q         | -9.657740402915696    |
+| train_1/fw_bonus          | -0.992623008787632    |
+| train_1/fw_loss           | 0.0701624795794487    |
+| train_1/mu_grads          | -0.01575765493325889  |
+| train_1/mu_grads_std      | 0.13688361831009388   |
+| train_1/mu_loss           | 9.003813410900232     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -9.10751512087256     |
+| train_1/q_grads           | 0.011024541361257434  |
+| train_1/q_grads_std       | 0.11223370004445314   |
+| train_1/q_loss            | 1.7250947103568772    |
+| train_1/reward            | -2.577293937824288    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0087158203125       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.014814814814814815  |
+| train_1/target_q          | -9.619762307977632    |
+-----------------------------------------------------
+Saving periodic policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_0.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Training epoch 1
+Time for epoch 1: 827.10. Rollout time: 499.78, Training time: 327.21
+Evaluating epoch 1
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 1                     |
+| policy/steps              | 181255.0              |
+| test/episodes             | 50.0                  |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -25.208214775847708   |
+| test_1/avg_q              | -20.21936520298507    |
+| test_1/n_subgoals         | 1351.0                |
+| test_1/subgoal_succ_rate  | 0.5196150999259808    |
+| train/episodes            | 200.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -14.412883941194641   |
+| train_0/current_q         | -6.9714312179738815   |
+| train_0/fw_bonus          | -0.9979490607976913   |
+| train_0/fw_loss           | 0.01781450994312763   |
+| train_0/mu_grads          | -0.021552959410473704 |
+| train_0/mu_grads_std      | 0.2101319722831249    |
+| train_0/mu_loss           | 6.928913316547368     |
+| train_0/next_q            | -6.875095363106981    |
+| train_0/q_grads           | 0.0046039805980399254 |
+| train_0/q_grads_std       | 0.1379382211714983    |
+| train_0/q_loss            | 0.5380403703430746    |
+| train_0/reward            | -0.6245421973861085   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.008837890625        |
+| train_0/target_q          | -7.138783118904985    |
+| train_1/avg_q             | -19.504167168989547   |
+| train_1/current_q         | -9.515953710244492    |
+| train_1/fw_bonus          | -0.9909062817692756   |
+| train_1/fw_loss           | 0.08301733918488026   |
+| train_1/mu_grads          | -0.02685527866706252  |
+| train_1/mu_grads_std      | 0.17796917743980883   |
+| train_1/mu_loss           | 7.656612699142917     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -8.926053184253442    |
+| train_1/q_grads           | 0.001664084050571546  |
+| train_1/q_grads_std       | 0.12825625501573085   |
+| train_1/q_loss            | 0.7809377975737675    |
+| train_1/reward            | -2.5849397064306685   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.003955078125        |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0022222222222222222 |
+| train_1/target_q          | -9.49698241064913     |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Training epoch 2
+Time for epoch 2: 763.35. Rollout time: 465.37, Training time: 297.84
+Evaluating epoch 2
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 2                     |
+| policy/steps              | 272380.0              |
+| test/episodes             | 75.0                  |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.99963023796907    |
+| test_1/avg_q              | -18.281353521180502   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 300.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -26.34809043435909    |
+| train_0/current_q         | -8.38354334190132     |
+| train_0/fw_bonus          | -0.9984106600284577   |
+| train_0/fw_loss           | 0.01389369685202837   |
+| train_0/mu_grads          | -0.021085585467517376 |
+| train_0/mu_grads_std      | 0.24152043275535107   |
+| train_0/mu_loss           | 8.340779685550446     |
+| train_0/next_q            | -8.324663718559528    |
+| train_0/q_grads           | 0.003376049274811521  |
+| train_0/q_grads_std       | 0.1512095332145691    |
+| train_0/q_loss            | 0.5649502777510461    |
+| train_0/reward            | -0.6208673142682528   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0121826171875       |
+| train_0/target_q          | -8.527778088004005    |
+| train_1/avg_q             | -19.960276698917124   |
+| train_1/current_q         | -10.795202155347631   |
+| train_1/fw_bonus          | -0.9893167600035667   |
+| train_1/fw_loss           | 0.09491963256150485   |
+| train_1/mu_grads          | -0.04875753493979573  |
+| train_1/mu_grads_std      | 0.20774647258222104   |
+| train_1/mu_loss           | 8.910331618482578     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -10.569289533188641   |
+| train_1/q_grads           | -0.01335488772019744  |
+| train_1/q_grads_std       | 0.14391069263219833   |
+| train_1/q_loss            | 1.4277975809547507    |
+| train_1/reward            | -2.5601709894552185   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.003466796875        |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -10.772271077105      |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Training epoch 3
+Time for epoch 3: 799.95. Rollout time: 498.77, Training time: 300.99
+Evaluating epoch 3
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 3                     |
+| policy/steps              | 363407.0              |
+| test/episodes             | 100.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.944979818433104   |
+| test_1/avg_q              | -18.686230492047944   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 400.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -26.486881855197716   |
+| train_0/current_q         | -9.245116759268647    |
+| train_0/fw_bonus          | -0.9985658973455429   |
+| train_0/fw_loss           | 0.012575054354965687  |
+| train_0/mu_grads          | -0.029768311278894545 |
+| train_0/mu_grads_std      | 0.267011521011591     |
+| train_0/mu_loss           | 9.18832513141955      |
+| train_0/next_q            | -9.197338318350598    |
+| train_0/q_grads           | 0.0038607108464930205 |
+| train_0/q_grads_std       | 0.16215060278773308   |
+| train_0/q_loss            | 0.5321489571296767    |
+| train_0/reward            | -0.6230667700150662   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.022802734375        |
+| train_0/target_q          | -9.403287006027025    |
+| train_1/avg_q             | -19.4089865083312     |
+| train_1/current_q         | -10.246467032922727   |
+| train_1/fw_bonus          | -0.988451860845089    |
+| train_1/fw_loss           | 0.10139592159539461   |
+| train_1/mu_grads          | -0.050989515334367755 |
+| train_1/mu_grads_std      | 0.22860637940466405   |
+| train_1/mu_loss           | 8.309482366899044     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -9.767327414114275    |
+| train_1/q_grads           | -0.01785332253202796  |
+| train_1/q_grads_std       | 0.1591598890721798    |
+| train_1/q_loss            | 1.1054643656404255    |
+| train_1/reward            | -2.569641044931268    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0027099609375       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.001851851851851852  |
+| train_1/target_q          | -10.22017536370442    |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 4
+Time for epoch 4: 888.34. Rollout time: 548.53, Training time: 339.66
+Evaluating epoch 4
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 4                     |
+| policy/steps              | 454493.0              |
+| test/episodes             | 125.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.999929045352925   |
+| test_1/avg_q              | -19.302821664596596   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 500.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -26.71782025472871    |
+| train_0/current_q         | -9.299616385104722    |
+| train_0/fw_bonus          | -0.9986585840582848   |
+| train_0/fw_loss           | 0.011787805799394846  |
+| train_0/mu_grads          | -0.02608896973542869  |
+| train_0/mu_grads_std      | 0.29178272411227224   |
+| train_0/mu_loss           | 9.289292906590534     |
+| train_0/next_q            | -9.286945462292648    |
+| train_0/q_grads           | 0.0006654695695033297 |
+| train_0/q_grads_std       | 0.17248484827578067   |
+| train_0/q_loss            | 0.5038637235268164    |
+| train_0/reward            | -0.6275210931009496   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0375732421875       |
+| train_0/target_q          | -9.466490618213369    |
+| train_1/avg_q             | -19.616291049018276   |
+| train_1/current_q         | -10.782632572060017   |
+| train_1/fw_bonus          | -0.9872332096099854   |
+| train_1/fw_loss           | 0.11052125673741102   |
+| train_1/mu_grads          | -0.055573250725865365 |
+| train_1/mu_grads_std      | 0.24668686054646968   |
+| train_1/mu_loss           | 8.741857479103512     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -10.403560178914859   |
+| train_1/q_grads           | -0.02761541251093149  |
+| train_1/q_grads_std       | 0.17676346749067307   |
+| train_1/q_loss            | 1.0049966757528483    |
+| train_1/reward            | -2.6501957526859767   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0026123046875       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0007407407407407407 |
+| train_1/target_q          | -10.746681055918708   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 5
+Time for epoch 5: 852.67. Rollout time: 521.68, Training time: 330.86
+Evaluating epoch 5
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 5                     |
+| policy/steps              | 544966.0              |
+| test/episodes             | 150.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.992224335661426   |
+| test_1/avg_q              | -18.179454278929548   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 600.0                 |
+| train/success_rate        | 0.01                  |
+| train_0/avg_q             | -26.91166097884526    |
+| train_0/current_q         | -9.253376145679812    |
+| train_0/fw_bonus          | -0.9985189378261566   |
+| train_0/fw_loss           | 0.012973999069072307  |
+| train_0/mu_grads          | -0.027783252112567425 |
+| train_0/mu_grads_std      | 0.3124516882002354    |
+| train_0/mu_loss           | 9.1942943039582       |
+| train_0/next_q            | -9.195436681950856    |
+| train_0/q_grads           | 0.001630786614259705  |
+| train_0/q_grads_std       | 0.18015443682670593   |
+| train_0/q_loss            | 0.45298916519664545   |
+| train_0/reward            | -0.6461080065186252   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.033544921875        |
+| train_0/target_q          | -9.43470187136422     |
+| train_1/avg_q             | -20.00754251611409    |
+| train_1/current_q         | -11.331367193136265   |
+| train_1/fw_bonus          | -0.9846630230545997   |
+| train_1/fw_loss           | 0.12976671662181616   |
+| train_1/mu_grads          | -0.05792636163532734  |
+| train_1/mu_grads_std      | 0.25963702201843264   |
+| train_1/mu_loss           | 8.674311725997397     |
+| train_1/n_subgoals        | 2676.0                |
+| train_1/next_q            | -10.931153944857266   |
+| train_1/q_grads           | -0.035916884802281855 |
+| train_1/q_grads_std       | 0.18947411924600602   |
+| train_1/q_loss            | 1.011463312348948     |
+| train_1/reward            | -2.662700179702006    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.00224609375         |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -11.305017395509173   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 6
+Time for epoch 6: 833.98. Rollout time: 517.30, Training time: 316.57
+Evaluating epoch 6
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 6                     |
+| policy/steps              | 636063.0              |
+| test/episodes             | 175.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.99688633736183    |
+| test_1/avg_q              | -18.410127384946946   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 700.0                 |
+| train/success_rate        | 0.01                  |
+| train_0/avg_q             | -26.821224398181055   |
+| train_0/current_q         | -9.732961579316427    |
+| train_0/fw_bonus          | -0.9983074396848679   |
+| train_0/fw_loss           | 0.014770543482154608  |
+| train_0/mu_grads          | -0.03113663597032428  |
+| train_0/mu_grads_std      | 0.3269860990345478    |
+| train_0/mu_loss           | 9.617366321437448     |
+| train_0/next_q            | -9.615046784666221    |
+| train_0/q_grads           | 0.005977860826533288  |
+| train_0/q_grads_std       | 0.1901554398238659    |
+| train_0/q_loss            | 0.5513417215673455    |
+| train_0/reward            | -0.6884440453435673   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0459228515625       |
+| train_0/target_q          | -9.879539601868084    |
+| train_1/avg_q             | -20.10495687401302    |
+| train_1/current_q         | -12.709011005523461   |
+| train_1/fw_bonus          | -0.9831008747220039   |
+| train_1/fw_loss           | 0.14146411344408988   |
+| train_1/mu_grads          | -0.060054993629455565 |
+| train_1/mu_grads_std      | 0.2732163481414318    |
+| train_1/mu_loss           | 9.246600175076795     |
+| train_1/n_subgoals        | 2699.0                |
+| train_1/next_q            | -12.42507469204247    |
+| train_1/q_grads           | -0.03890636116266251  |
+| train_1/q_grads_std       | 0.20183338075876237   |
+| train_1/q_loss            | 1.6465676024068152    |
+| train_1/reward            | -2.6425342484479186   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0014404296875       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -12.66693275551144    |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 7
+Time for epoch 7: 786.05. Rollout time: 489.41, Training time: 296.54
+Evaluating epoch 7
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 7                     |
+| policy/steps              | 726939.0              |
+| test/episodes             | 200.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.999727028283516   |
+| test_1/avg_q              | -18.51908736482575    |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 800.0                 |
+| train/success_rate        | 0.02                  |
+| train_0/avg_q             | -26.947364846408693   |
+| train_0/current_q         | -10.086462260365515   |
+| train_0/fw_bonus          | -0.9982220306992531   |
+| train_0/fw_loss           | 0.01549588730558753   |
+| train_0/mu_grads          | -0.03762282244861126  |
+| train_0/mu_grads_std      | 0.33916515931487085   |
+| train_0/mu_loss           | 9.960952744313914     |
+| train_0/next_q            | -9.942749680674591    |
+| train_0/q_grads           | 0.009554937900975346  |
+| train_0/q_grads_std       | 0.20256944932043552   |
+| train_0/q_loss            | 0.6672664114011282    |
+| train_0/reward            | -0.7324778724600037   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0293701171875       |
+| train_0/target_q          | -10.229945552173573   |
+| train_1/avg_q             | -20.074248215837308   |
+| train_1/current_q         | -12.567833166117106   |
+| train_1/fw_bonus          | -0.9813598290085792   |
+| train_1/fw_loss           | 0.15450098551809788   |
+| train_1/mu_grads          | -0.057952103391289714 |
+| train_1/mu_grads_std      | 0.28926457166671754   |
+| train_1/mu_loss           | 8.89865417094149      |
+| train_1/n_subgoals        | 2692.0                |
+| train_1/next_q            | -12.165754119180601   |
+| train_1/q_grads           | -0.04134440701454878  |
+| train_1/q_grads_std       | 0.21354384012520314   |
+| train_1/q_loss            | 1.7566428402069743    |
+| train_1/reward            | -2.623239126280896    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0009521484375       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -12.562925338829286   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 8
+Time for epoch 8: 916.43. Rollout time: 552.82, Training time: 363.51
+Evaluating epoch 8
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 8                     |
+| policy/steps              | 818064.0              |
+| test/episodes             | 225.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.999999999987494   |
+| test_1/avg_q              | -17.63897770936502    |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 900.0                 |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -26.999831893303885   |
+| train_0/current_q         | -10.45398504796477    |
+| train_0/fw_bonus          | -0.9981735929846763   |
+| train_0/fw_loss           | 0.015907307085581125  |
+| train_0/mu_grads          | -0.038431127369403836 |
+| train_0/mu_grads_std      | 0.350945645570755     |
+| train_0/mu_loss           | 10.290555223991428    |
+| train_0/next_q            | -10.258170695497181   |
+| train_0/q_grads           | 0.011807261407375336  |
+| train_0/q_grads_std       | 0.212957726418972     |
+| train_0/q_loss            | 0.8366158315274248    |
+| train_0/reward            | -0.7832592200786166   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.028076171875        |
+| train_0/target_q          | -10.596738043458313   |
+| train_1/avg_q             | -20.164232993405886   |
+| train_1/current_q         | -14.099039886534666   |
+| train_1/fw_bonus          | -0.979309706389904    |
+| train_1/fw_loss           | 0.1698521513491869    |
+| train_1/mu_grads          | -0.06070263311266899  |
+| train_1/mu_grads_std      | 0.302261171489954     |
+| train_1/mu_loss           | 9.56357270754325      |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -13.836837327275356   |
+| train_1/q_grads           | -0.0430750735104084   |
+| train_1/q_grads_std       | 0.2309630148112774    |
+| train_1/q_loss            | 2.3021109520148135    |
+| train_1/reward            | -2.7130708362226867   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0005859375          |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.0                   |
+| train_1/target_q          | -14.088799474348727   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 9
+Time for epoch 9: 965.29. Rollout time: 568.31, Training time: 396.85
+Evaluating epoch 9
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 9                     |
+| policy/steps              | 907837.0              |
+| test/episodes             | 250.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.007796938306118   |
+| test_1/avg_q              | -17.41902908068881    |
+| test_1/n_subgoals         | 686.0                 |
+| test_1/subgoal_succ_rate  | 0.018950437317784258  |
+| train/episodes            | 1000.0                |
+| train/success_rate        | 0.01                  |
+| train_0/avg_q             | -24.122095587625942   |
+| train_0/current_q         | -11.01664352458928    |
+| train_0/fw_bonus          | -0.9979206323623657   |
+| train_0/fw_loss           | 0.018056043423712254  |
+| train_0/mu_grads          | -0.040756750572472814 |
+| train_0/mu_grads_std      | 0.365374818444252     |
+| train_0/mu_loss           | 10.833190063562663    |
+| train_0/next_q            | -10.799957387437107   |
+| train_0/q_grads           | 0.01132285064086318   |
+| train_0/q_grads_std       | 0.22677223421633244   |
+| train_0/q_loss            | 1.069929576520194     |
+| train_0/reward            | -0.833440117587088    |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.01064453125         |
+| train_0/target_q          | -11.15431563878321    |
+| train_1/avg_q             | -19.808798552754368   |
+| train_1/current_q         | -14.657024975396812   |
+| train_1/fw_bonus          | -0.9761170253157616   |
+| train_1/fw_loss           | 0.19375883378088474   |
+| train_1/mu_grads          | -0.05811556512489915  |
+| train_1/mu_grads_std      | 0.3141385234892368    |
+| train_1/mu_loss           | 9.534249354584494     |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -14.559439643073683   |
+| train_1/q_grads           | -0.04541160799562931  |
+| train_1/q_grads_std       | 0.2411393690854311    |
+| train_1/q_loss            | 3.117006913603201     |
+| train_1/reward            | -2.678123498208515    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0001220703125       |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.027777777777777776  |
+| train_1/target_q          | -14.690758059425354   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 10
+Time for epoch 10: 1055.34. Rollout time: 671.20, Training time: 384.01
+Evaluating epoch 10
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 10                    |
+| policy/steps              | 997684.0              |
+| test/episodes             | 275.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.797459371873458   |
+| test_1/avg_q              | -19.073704019264905   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 1100.0                |
+| train/success_rate        | 0.01                  |
+| train_0/avg_q             | -26.1393658400012     |
+| train_0/current_q         | -11.174029388456109   |
+| train_0/fw_bonus          | -0.9976746201515198   |
+| train_0/fw_loss           | 0.020145556749776007  |
+| train_0/mu_grads          | -0.03952377829700708  |
+| train_0/mu_grads_std      | 0.3803527869284153    |
+| train_0/mu_loss           | 10.94717933369736     |
+| train_0/next_q            | -10.911160350091855   |
+| train_0/q_grads           | 0.009526139055378736  |
+| train_0/q_grads_std       | 0.23747014701366426   |
+| train_0/q_loss            | 1.1747856000817136    |
+| train_0/reward            | -0.8751632856721698   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.00361328125         |
+| train_0/target_q          | -11.313244629065892   |
+| train_1/avg_q             | -19.418345041410895   |
+| train_1/current_q         | -14.097674751371063   |
+| train_1/fw_bonus          | -0.97339678555727     |
+| train_1/fw_loss           | 0.21412795186042785   |
+| train_1/mu_grads          | -0.057581630907952784 |
+| train_1/mu_grads_std      | 0.321127837896347     |
+| train_1/mu_loss           | 9.821801342676569     |
+| train_1/n_subgoals        | 2692.0                |
+| train_1/next_q            | -13.752505438313065   |
+| train_1/q_grads           | -0.04952264130115509  |
+| train_1/q_grads_std       | 0.24633689746260642   |
+| train_1/q_loss            | 2.9153716747253116    |
+| train_1/reward            | -2.674586991453907    |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 2.44140625e-05        |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.018202080237741457  |
+| train_1/target_q          | -14.130327564794431   |
+-----------------------------------------------------
+Saving periodic policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_10.pkl ...
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 11
+Time for epoch 11: 1009.64. Rollout time: 603.42, Training time: 406.08
+Evaluating epoch 11
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 11                    |
+| policy/steps              | 1088344.0             |
+| test/episodes             | 300.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.592291449369444   |
+| test_1/avg_q              | -18.084680783098978   |
+| test_1/n_subgoals         | 684.0                 |
+| test_1/subgoal_succ_rate  | 0.01608187134502924   |
+| train/episodes            | 1200.0                |
+| train/success_rate        | 0.0                   |
+| train_0/avg_q             | -26.43574488909021    |
+| train_0/current_q         | -11.189346933149668   |
+| train_0/fw_bonus          | -0.997679254412651    |
+| train_0/fw_loss           | 0.020106205809861423  |
+| train_0/mu_grads          | -0.038857770059257744 |
+| train_0/mu_grads_std      | 0.39218498319387435   |
+| train_0/mu_loss           | 10.96359183694519     |
+| train_0/next_q            | -10.92606649284088    |
+| train_0/q_grads           | 0.009898147103376687  |
+| train_0/q_grads_std       | 0.2470796201378107    |
+| train_0/q_loss            | 1.1414238612100938    |
+| train_0/reward            | -0.8772884671914654   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.0032470703125       |
+| train_0/target_q          | -11.327463298920076   |
+| train_1/avg_q             | -19.702275311662472   |
+| train_1/current_q         | -12.722379191101561   |
+| train_1/fw_bonus          | -0.9713085740804672   |
+| train_1/fw_loss           | 0.2297644391655922    |
+| train_1/mu_grads          | -0.061004726029932496 |
+| train_1/mu_grads_std      | 0.3237973891198635    |
+| train_1/mu_loss           | 9.81601166109649      |
+| train_1/n_subgoals        | 2700.0                |
+| train_1/next_q            | -12.309063823627667   |
+| train_1/q_grads           | -0.05359846781939268  |
+| train_1/q_grads_std       | 0.2484206311404705    |
+| train_1/q_loss            | 1.3470825555278119    |
+| train_1/reward            | -2.7038928190566365   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0                   |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.009259259259259259  |
+| train_1/target_q          | -12.707546556671481   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 12
+Time for epoch 12: 929.28. Rollout time: 602.38, Training time: 326.77
+Evaluating epoch 12
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+-----------------------------------------------------
+| epoch                     | 12                    |
+| policy/steps              | 1178979.0             |
+| test/episodes             | 325.0                 |
+| test/success_rate         | 0.0                   |
+| test_0/avg_q              | -26.99999999642317    |
+| test_1/avg_q              | -18.843263789715724   |
+| test_1/n_subgoals         | 675.0                 |
+| test_1/subgoal_succ_rate  | 0.0                   |
+| train/episodes            | 1300.0                |
+| train/success_rate        | 0.01                  |
+| train_0/avg_q             | -26.74219900556846    |
+| train_0/current_q         | -11.409200350248259   |
+| train_0/fw_bonus          | -0.9973090395331383   |
+| train_0/fw_loss           | 0.023250841535627842  |
+| train_0/mu_grads          | -0.042333511542528866 |
+| train_0/mu_grads_std      | 0.40363633036613467   |
+| train_0/mu_loss           | 11.173916770975747    |
+| train_0/next_q            | -11.132905306605533   |
+| train_0/q_grads           | 0.008598204236477613  |
+| train_0/q_grads_std       | 0.2560091309249401    |
+| train_0/q_loss            | 1.0077526601003217    |
+| train_0/reward            | -0.8907090957789479   |
+| train_0/reward_-0.0_frac  | 0.0                   |
+| train_0/reward_-1.0_frac  | 0.00146484375         |
+| train_0/target_q          | -11.55886463037712    |
+| train_1/avg_q             | -19.99759346147687    |
+| train_1/current_q         | -12.702686838195689   |
+| train_1/fw_bonus          | -0.9673044919967652   |
+| train_1/fw_loss           | 0.25974698811769487   |
+| train_1/mu_grads          | -0.05911914054304361  |
+| train_1/mu_grads_std      | 0.3292434595525265    |
+| train_1/mu_loss           | 9.089308429839951     |
+| train_1/n_subgoals        | 2689.0                |
+| train_1/next_q            | -12.374190997993065   |
+| train_1/q_grads           | -0.055409788899123666 |
+| train_1/q_grads_std       | 0.25200279504060746   |
+| train_1/q_loss            | 2.230996811305867     |
+| train_1/reward            | -2.6874376963427493   |
+| train_1/reward_-0.0_frac  | 0.0                   |
+| train_1/reward_-1.0_frac  | 0.0                   |
+| train_1/reward_-27.0_frac | 0.0                   |
+| train_1/subgoal_succ_rate | 0.00334696913350688   |
+| train_1/target_q          | -12.749540781224635   |
+-----------------------------------------------------
+New best value for test/success_rate: 0.0. Saving policy to data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101/policy_best.pkl ...
+Mean of test/success_rate of last 4 epochs: 0.0
+Training epoch 13
+Time for epoch 13: 722.80. Rollout time: 451.43, Training time: 271.26
+Evaluating epoch 13
+Data_dir: data/eef7a77/AntReacherEnv-v0/alg:chac|eta:0.75|fw:1|fwhidsiz:256,256,256|nlev:2|reg:True|rolbatsiz:1|timsca:27,27|101
+----------------------------------------------------
+| epoch                     | 13                   |
+| policy/steps              | 1269582.0            |
+| test/episodes             | 350.0                |
+| test/success_rate         | 0.12                 |
+| test_0/avg_q              | -27.0                |
+| test_1/avg_q              | -18.654208584132697  |
+| test_1/n_subgoals         | 658.0                |
+| test_1/subgoal_succ_rate  | 0.0                  |
+| train/episodes            | 1400.0               |
+| train/success_rate        | 0.0                  |
+| train_0/avg_q             | -26.999393990037408  |
+| train_0/current_q         | -11.174552584503259  |
+| train_0/fw_bonus          | -0.9972134828567505  |
+| train_0/fw_loss           | 0.024062482872977853 |
+| train_0/mu_grads          | -0.04379410138353705 |
+| train_0/mu_grads_std      | 0.4134718604385853   |
+| train_0/mu_loss           | 10.938867197189097   |
+| train_0/next_q            | -10.887588841781831  |
+| train_0/q_grads           | 0.008852438512258231 |
+| train_0/q_grads_std       | 0.26311194971203805  |
+| train_0/q_loss            | 0.9477574841378675   |
+| train_0/reward            | -0.884038478475486   |
+| train_0/reward_-0.0_frac  | 0.0                  |
+| train_0/reward_-1.0_frac  | 0.00224609375        |
+| train_0/target_q          | -11.324125020717146  |
+| train_1/avg_q             | -19.991813529905038  |
+| train_1/current_q         | -14.421102248412343  |
+| train_1/fw_bonus          | -0.9658817157149315  |
+| train_1/fw_loss           | 0.2704006195068359   |
+| train_1/mu_grads          | -0.06003891350701451 |
+| train_1/mu_grads_std      | 0.3317857407033443   |
+| train_1/mu_loss           | 9.923048531344074    |
+| train_1/n_subgoals        | 2700.0               |
+| train_1/next_q            | -14.223406772970117  |
+| train_1/q_grads           | -0.05837219832465053 |
+| train_1/q_grads_std       | 0.2554806970059872   |
+| train_1/q_loss            | 3.170836000222664    |
+| train_1/reward            | -2.7500153530600073  |
+| train_1/reward_-0.0_frac  | 0.0                  |
+| train_1/reward_-1.0_frac  | 0.0                  |
+| train_1/reward_-27.0_frac | 0.0                  |
+| train_1/subgoal_succ_rate | 0.0                  |
+| train_1/target_q          | -14.471154507692432  |
+----------------------------------------------------
