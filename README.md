@@ -39,7 +39,7 @@ This code works with Python3.7 on MacOS
 - To run a trained policy or to continue its training:
     `python3.7 experiment/train.py--env AntFourRoomsEnv-v0 --restore_policy path-to-the-policy --n_epochs 100 --fw 1 --eta 0.5 --regularization 1`
 
-### Visualization tool: 
+### Visualization tools: 
 - To see the visualization of the different runs of this [project](https://wandb.ai/rfarah/RCHAC?workspace=user-rfarah) on W&B.
 - To use tensorboard, which is used from the authors of CHAC, run the following:
 `tensorboard --logdir=./data/d4a6886/AntReacherEnv-v0 --host localhost --port 8088` or 
